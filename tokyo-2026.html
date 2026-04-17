@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Plane, MapPin, Sparkles, LogOut, Lock, Home, Zap, Utensils, Camera, Compass, Clock, Train, ShoppingBag, Microscope, ChevronRight, Info, AlertTriangle, Ticket, Landmark, TreePine } from 'lucide-react';
 
-export default function App() {
+const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState('');
   const [activeTab, setActiveTab] = useState('itinerary');
@@ -46,6 +46,7 @@ export default function App() {
             </button>
           </div>
           {errorMsg && <p className="mt-4 text-red-500 text-sm">密碼錯誤，請再試一次。</p>}
+          <p className="mt-6 text-xs text-gray-400">提示：預設密碼為 2026</p>
         </div>
       </div>
     );
@@ -54,12 +55,10 @@ export default function App() {
   return (
     <div className="min-h-screen bg-gray-50 text-gray-800 font-sans pb-20">
       {/* Hero Section */}
-      <header className="relative h-[40vh] flex items-center justify-center text-white overflow-hidden bg-indigo-900">
-        <img 
-          src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&q=80&w=2000" 
-          alt="Tokyo" 
-          className="absolute inset-0 w-full h-full object-cover brightness-50" 
-        />
+      <header className="relative h-[40vh] flex items-center justify-center text-white overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&q=80&w=2000" alt="Tokyo" className="w-full h-full object-cover brightness-50" />
+        </div>
         <div className="relative z-10 text-center px-4">
           <h1 className="text-4xl md:text-6xl font-bold mb-2 tracking-tight">2026 東京之旅</h1>
           <p className="text-xl opacity-90 font-light">4/30 (Thu) - 5/03 (Sun) · 四天三夜專屬行程</p>
@@ -93,7 +92,7 @@ export default function App() {
       <main className="max-w-4xl mx-auto p-4 md:p-8 space-y-12">
         {activeTab === 'itinerary' && (
           <div className="space-y-10">
-            {/* Day 1 */}
+            {/* Day 1: 4/30 */}
             <div className="bg-white rounded-3xl shadow-md overflow-hidden border border-gray-100">
               <div className="bg-blue-600 text-white p-5 flex items-center justify-between">
                 <h2 className="text-xl font-bold flex items-center gap-2"><Plane className="w-6 h-6" /> Day 1 · 4/30 (四) 出發與抵達</h2>
@@ -117,7 +116,7 @@ export default function App() {
               </div>
             </div>
 
-            {/* Day 2 */}
+            {/* Day 2: 5/1 */}
             <div className="bg-white rounded-3xl shadow-md overflow-hidden border border-gray-100">
               <div className="bg-indigo-600 text-white p-5">
                 <h2 className="text-xl font-bold flex items-center gap-2"><MapPin className="w-6 h-6" /> Day 2 · 5/01 (五) 下町文化與新宿購物</h2>
@@ -154,18 +153,18 @@ export default function App() {
               </div>
             </div>
 
-            {/* Day 3 */}
+            {/* Day 3: 5/2 */}
             <div className="bg-white rounded-3xl shadow-md overflow-hidden border border-gray-100">
               <div className="bg-purple-600 text-white p-5">
                 <h2 className="text-xl font-bold flex items-center gap-2"><Sparkles className="w-6 h-6" /> Day 3 · 5/02 (六) 藤花與藝術之旅</h2>
               </div>
               <div className="p-6 space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 font-sans">
-                  <div className="p-4 bg-gray-50 rounded-2xl border border-purple-100">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="p-4 bg-gray-50 rounded-2xl border border-purple-100 font-sans">
                     <div className="flex items-center gap-2 mb-2 text-purple-700 font-bold"><Camera className="w-5 h-5" /> 上午：龜戶天神社</div>
                     <p className="text-sm text-gray-600">賞紫藤與晴空塔。黃金週人潮高峰，務必 08:30 前抵達以確保拍照品質。</p>
                   </div>
-                  <div className="p-4 bg-gray-50 rounded-2xl border border-purple-100">
+                  <div className="p-4 bg-gray-50 rounded-2xl border border-purple-100 font-sans">
                     <div className="flex items-center gap-2 mb-2 text-purple-700 font-bold"><Compass className="w-5 h-5" /> 下午：麻布台 Hills</div>
                     <p className="text-sm text-gray-600">探索日本新地標與時尚咖啡廳。隨後步行至 teamLab 展區。</p>
                   </div>
@@ -186,13 +185,13 @@ export default function App() {
               </div>
             </div>
 
-            {/* Day 4 */}
+            {/* Day 4: 5/3 */}
             <div className="bg-white rounded-3xl shadow-md overflow-hidden border border-gray-100">
               <div className="bg-emerald-600 text-white p-5">
                 <h2 className="text-xl font-bold flex items-center gap-2"><LogOut className="w-6 h-6" /> Day 4 · 5/03 (日) 科博館與平安返家</h2>
               </div>
               <div className="p-6 space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm font-sans">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 font-sans text-sm">
                   <div className="p-4 bg-gray-50 rounded-2xl border border-emerald-100">
                     <div className="flex items-center gap-2 mb-2 text-emerald-700 font-bold"><Microscope className="w-5 h-5" /> 上午：國立科學博物館</div>
                     <p>上野公園內。推薦重點：地球館。看展後回 TABI 上野領取行李。</p>
@@ -233,10 +232,10 @@ export default function App() {
             <div className="space-y-4">
               <div className="flex justify-between border-b pb-3"><span>機票 (兩人總計)</span><span className="font-bold text-gray-700">$50,232 TWD</span></div>
               <div className="flex justify-between border-b pb-3"><span>住宿 (Hotel Villa Fontaine)</span><span className="font-bold text-gray-700">$4,703 TWD</span></div>
-              <div className="flex justify-between border-b pb-3"><span>住宿 (TABI 上野)</span><span className="font-bold text-gray-700">¥95,472 JPY</span></div>
-              <div className="flex justify-between border-b pb-3"><span>teamLab 門票 (兩大)</span><span className="font-bold text-gray-700">¥11,500 JPY</span></div>
+              <div className="flex justify-between border-b pb-3"><span>住宿 (TABI 上野)</span><span class="font-bold text-gray-700">¥95,472 JPY</span></div>
+              <div className="flex justify-between border-b pb-3"><span>teamLab 門票 (兩大)</span><span class="font-bold text-gray-700">¥11,500 JPY</span></div>
               <div className="flex justify-between border-b pb-3 text-blue-700 font-bold"><span>Skyliner 票券 (三人折後)</span><span>$970 TWD</span></div>
-              <div className="flex justify-between border-b pb-3"><span>Sim 卡 (iVideo)</span><span className="font-bold text-gray-700">$586 TWD</span></div>
+              <div className="flex justify-between border-b pb-3"><span>Sim 卡 (iVideo)</span><span class="font-bold text-gray-700">$586 TWD</span></div>
               <div className="flex justify-between pt-4 text-lg border-t-2 border-gray-100">
                 <span className="font-bold">總計預估 (未含餐費)</span>
                 <div className="text-right">
@@ -282,8 +281,10 @@ export default function App() {
 
       <footer className="text-center py-12 text-gray-400 text-xs font-light">
           <p>© 2026 Tokyo Adventure Planner</p>
-          <p>專業旅遊嚮導 完美修復編譯問題</p>
+          <p>專業旅遊嚮導 已修正回程時間 (MM625: 16:50 ➜ 19:40)</p>
       </footer>
     </div>
   );
-}
+};
+
+export default App;
