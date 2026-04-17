@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2027 九州 ‧ 北海道 深度家庭旅遊</title>
+    <!-- 使用穩定 CDN 資源以確保 GitHub Pages 正常顯示 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .fade-in { animation: fadeIn 0.8s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .day-card:hover { transform: translateY(-3px); transition: all 0.3s ease; }
+        .timeline-line { position: relative; }
+        .timeline-line::before {
+            content: ''; position: absolute; left: 19px; top: 30px; bottom: 0;
+            width: 2px; background: #e2e8f0; z-index: 0;
+        }
+        /* 優化手機端閱讀 */
+        @media (max-width: 640px) {
+            .timeline-line::before { left: 15px; }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 font-sans text-slate-800 antialiased">
+
+    <!-- 登入驗證 (GitHub Pages 靜態驗證) -->
+    <div id="login-screen" class="fixed inset-0 bg-slate-900/95 backdrop-blur-sm flex items-center justify-center z-50 px-4">
+        <div class="bg-white p-8 rounded-2xl shadow-2xl text-center max-w-md w-full fade-in">
+            <div class="w-16 h-16 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl">
+                <i class="fas fa-lock"></i>
+            </div>
+            <h2 class="text-2xl font-bold mb-2">解鎖最終優化行程</h2>
+            <p class="text-slate-500 mb-8 text-sm">請輸入解鎖密碼 2026 以檢視最新校準規劃</p>
+            <input type="password" id="password-input" class="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:border-blue-500 mb-4 text-center tracking-widest text-lg" placeholder="請輸入密碼">
+            <button onclick="checkPassword()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition shadow-lg text-lg">解鎖行程</button>
+            <p id="error-msg" class="text-red-500 text-sm hidden mt-4 font-medium">密碼錯誤，請重新輸入</p>
+        </div>
+    </div>
+
+    <!-- 主要內容 -->
+    <div id="main-content" class="hidden">
+        <header class="bg-gradient-to-r from-blue-900 to-indigo-800 text-white pt-16 pb-24 px-4 text-center relative overflow-hidden">
+            <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]"></div>
+            <div class="relative z-10">
+                <h1 class="text-3xl md:text-5xl font-bold mb-4 leading-tight">2027 九州 ‧ 北海道 深度家庭旅遊</h1>
+                <p class="text-blue-100 text-lg opacity-90">小倉門司鐵道迷必看 ‧ 慢活福岡 ‧ 北海道大家族銜接</p>
+            </div>
+        </header>
+
+        <main class="max-w-5xl mx-auto px-4 -mt-12 pb-20 relative z-20">
+            
+            <!-- 交通指南：分段攻略 -->
+            <section class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+                <div class="bg-white rounded-2xl shadow-xl p-6 border border-slate-100">
+                    <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2 border-b pb-3">
+                        <i class="fas fa-train text-blue-600"></i> 特急 Sonic 座位策略
+                    </h3>
+                    <div class="bg-blue-50 border border-blue-100 p-4 rounded-xl">
+                        <p class="text-sm text-blue-800 leading-relaxed font-bold">
+                            <i class="fas fa-info-circle mr-1"></i> 鐵道迷秘訣：
+                        </p>
+                        <p class="text-xs text-blue-700 mt-1">
+                            去程（博多 → 小倉）：請務必選擇<strong>「右側靠窗」</strong>，可飽覽美麗的周防灘海景。<br>
+                            回程（門司港 → 博多）：隨意坐，剛好讓玩累的孩子小睡。
+                        </p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-xl p-6 border border-slate-100">
+                    <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2 border-b pb-3">
+                        <i class="fas fa-subway text-indigo-600"></i> 市區移動指南
+                    </h3>
+                    <ul class="text-xs space-y-2 text-slate-600">
+                        <li><i class="fas fa-train mr-1 text-blue-500"></i> <strong>地鐵空港線：</strong>機場與博多市區、大濠公園。</li>
+                        <li><i class="fas fa-map-signs mr-1 text-indigo-500"></i> <strong>地鐵七隈線：</strong>直達櫛田神社老街區。</li>
+                        <li><i class="fas fa-taxi mr-1 text-pink-500"></i> <strong>計程車：</strong>三公里內短程移動首選，免受風寒。</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- 每日行程列表 -->
+            <div class="space-y-12">
+                
+                <!-- Day 1 - Blue -->
+                <div class="bg-white rounded-2xl shadow-sm border p-8 day-card">
+                    <div class="flex flex-col md:flex-row gap-8">
+                        <div class="md:w-32 flex-shrink-0 text-center">
+                            <div class="bg-blue-600 text-white rounded-2xl p-4 shadow-lg">
+                                <p class="text-sm opacity-80">1/24 (日)</p>
+                                <p class="text-2xl font-bold tracking-tighter">Day 1</p>
+                            </div>
+                        </div>
+                        <div class="flex-grow">
+                            <h2 class="text-2xl font-bold mb-6 text-slate-800">🛬 抵達福岡：BR102 去程</h2>
+                            <div class="timeline-line pl-10 space-y-8">
+                                <div class="relative">
+                                    <div class="absolute -left-[32px] top-1 w-5 h-5 rounded-full bg-blue-600 border-4 border-white z-10"></div>
+                                    <h4 class="font-bold text-slate-800">晚間 - 抵達與暖心拉麵</h4>
+                                    <p class="text-slate-600 text-sm mt-1">搭乘 <strong>長榮航空 BR102</strong> 於 19:55 抵達。地鐵空港線直達博多車站飯店。第一晚於商場內享用熱拉麵，避免去戶外排隊受凍。</p>
+                                    <div class="bg-blue-50 border border-blue-100 p-3 rounded-lg text-sm italic text-blue-700 mt-3">
+                                        <i class="fas fa-utensils mr-2 text-blue-500"></i> <strong>在地小吃：</strong>博多 Shin-Shin 豚骨拉麵。
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Day 2 - Emerald -->
+                <div class="bg-white rounded-2xl shadow-sm border p-8 day-card">
+                    <div class="flex flex-col md:flex-row gap-8">
+                        <div class="md:w-32 flex-shrink-0 text-center">
+                            <div class="bg-emerald-600 text-white rounded-2xl p-4 shadow-lg">
+                                <p class="text-sm opacity-80">1/25 (一)</p>
+                                <p class="text-2xl font-bold tracking-tighter">Day 2</p>
+                            </div>
+                        </div>
+                        <div class="flex-grow">
+                            <h2 class="text-2xl font-bold mb-6 text-slate-800 text-emerald-700">🏰 福岡市區：慢活與地下街</h2>
+                            <div class="timeline-line pl-10 space-y-8">
+                                <div class="relative">
+                                    <div class="absolute -left-[32px] top-1 w-5 h-5 rounded-full bg-emerald-600 border-4 border-white z-10"></div>
+                                    <h4 class="font-bold text-slate-800">上午 - 大濠公園 & 福岡城跡</h4>
+                                    <p class="text-slate-600 text-sm mt-1">地鐵空港線至大濠公園。先進室內「探訪館」吹暖氣，湖畔星巴克是極佳的避寒休憩點。</p>
+                                </div>
+                                <div class="relative">
+                                    <div class="absolute -left-[32px] top-1 w-5 h-5 rounded-full bg-emerald-600 border-4 border-white z-10"></div>
+                                    <h4 class="font-bold text-slate-800">下午 - 天神地下街大採買</h4>
+                                    <p class="text-slate-600 text-sm mt-1">全地下街暖氣充足。太太可在各大百貨輕鬆採購補貨，無需吹寒風。</p>
+                                    <div class="bg-emerald-50 border border-emerald-100 p-2 rounded-lg text-xs text-emerald-700 mt-2">
+                                        <i class="fas fa-mug-hot mr-1"></i> <strong>推薦美食：</strong>博多水炊鍋或天神精緻咖啡。
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Day 3 - Rose -->
+                <div class="bg-white rounded-2xl shadow-sm border p-8 day-card">
+                    <div class="flex flex-col md:flex-row gap-8">
+                        <div class="md:w-32 flex-shrink-0 text-center">
+                            <div class="bg-rose-500 text-white rounded-2xl p-4 shadow-lg">
+                                <p class="text-sm opacity-80">1/26 (二)</p>
+                                <p class="text-2xl font-bold tracking-tighter">Day 3</p>
+                            </div>
+                        </div>
+                        <div class="flex-grow">
+                            <h2 class="text-2xl font-bold mb-6 text-slate-800 text-rose-700">🚂 鐵道小旅行：小倉 ➔ 門司港 (優化順序)</h2>
+                            <div class="timeline-line pl-10 space-y-8">
+                                <div class="relative">
+                                    <div class="absolute -left-[32px] top-1 w-5 h-5 rounded-full bg-rose-500 border-4 border-white z-10"></div>
+                                    <h4 class="font-bold text-slate-800">上午 - 小倉功能性補給 (Sonic 去程靠右坐)</h4>
+                                    <p class="text-slate-600 text-sm mt-1">搭乘 <strong>特急 Sonic</strong> 至小倉。先逛小倉城或 Aruaru City。此處百貨密集，適合處理功能性的採買需求。</p>
+                                </div>
+                                <div class="relative">
+                                    <div class="absolute -left-[32px] top-1 w-5 h-5 rounded-full bg-rose-500 border-4 border-white z-10"></div>
+                                    <h4 class="font-bold text-slate-800">下午 - 門司港情調收尾</h4>
+                                    <p class="text-slate-600 text-sm mt-1">轉乘前往門司港。九州鐵道紀念館開火車、漫步懷舊車站。海景夕陽作為一天情緒的收尾，體感極佳。</p>
+                                    <div class="bg-rose-50 border border-rose-100 p-2 rounded-lg text-xs text-rose-700 mt-2">
+                                        <i class="fas fa-utensils mr-1"></i> <strong>靈魂美食：</strong>燒咖哩 (Bear Fruits)。焗烤熱度是冬日救星。
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Day 4 - Amber -->
+                <div class="bg-white rounded-2xl shadow-sm border p-8 day-card">
+                    <div class="flex flex-col md:flex-row gap-8">
+                        <div class="md:w-32 flex-shrink-0 text-center">
+                            <div class="bg-amber-500 text-white rounded-2xl p-4 shadow-lg">
+                                <p class="text-sm opacity-80">1/27 (三)</p>
+                                <p class="text-2xl font-bold tracking-tighter">Day 4</p>
+                            </div>
+                        </div>
+                        <div class="flex-grow">
+                            <h2 class="text-2xl font-bold mb-6 text-slate-800 text-amber-700">♨️ 慢活自駕：太宰府與暖桌船</h2>
+                            <div class="timeline-line pl-10 space-y-8">
+                                <div class="relative">
+                                    <div class="absolute -left-[32px] top-1 w-5 h-5 rounded-full bg-amber-500 border-4 border-white z-10"></div>
+                                    <h4 class="font-bold text-slate-800">上午 - 太宰府祈福 (慢活版)</h4>
+                                    <p class="text-slate-600 text-sm mt-1">租車出發。今日捨棄博物館以維持輕鬆節奏。專注於天滿宮參拜與梅枝餅體驗。11:30 啟程往柳川。</p>
+                                </div>
+                                <div class="relative">
+                                    <div class="absolute -left-[32px] top-1 w-5 h-5 rounded-full bg-amber-500 border-4 border-white z-10"></div>
+                                    <h4 class="font-bold text-slate-800">下午 - 柳川暖桌船與嬉野溫泉</h4>
+                                    <p class="text-slate-600 text-sm mt-1">窩在被爐船內悠遊，這是今日體感精華。晚餐後入住嬉野，享用美肌之湯與溫泉湯豆腐。</p>
+                                    <div class="bg-amber-50 border border-amber-100 p-2 rounded-lg text-xs font-bold text-amber-700 mt-2">
+                                        <i class="fas fa-utensils mr-1"></i> <strong>在地名物：</strong>蒸籠鰻魚飯 & 溫泉湯豆腐。
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Day 5 - Cyan -->
+                <div class="bg-white rounded-2xl shadow-sm border p-8 day-card">
+                    <div class="flex flex-col md:flex-row gap-8">
+                        <div class="md:w-32 flex-shrink-0 text-center">
+                            <div class="bg-cyan-600 text-white rounded-2xl p-4 shadow-lg">
+                                <p class="text-sm opacity-80">1/28 (四)</p>
+                                <p class="text-2xl font-bold tracking-tighter">Day 5</p>
+                            </div>
+                        </div>
+                        <div class="flex-grow">
+                            <h2 class="text-2xl font-bold mb-6 text-slate-800 text-cyan-700">🚀 武雄書香與豪斯登堡光之城</h2>
+                            <div class="timeline-line pl-10 space-y-8">
+                                <div class="relative">
+                                    <div class="absolute -left-[32px] top-1 w-5 h-5 rounded-full bg-cyan-600 border-4 border-white z-10"></div>
+                                    <h4 class="font-bold text-slate-800">上午 - 武雄圖書館 & 宇宙科學館</h4>
+                                    <p class="text-slate-600 text-sm mt-1">圖書館書牆拍照喝咖啡後，直奔科學館讓兒子室內放電。午餐推薦佐賀牛漢堡。</p>
+                                </div>
+                                <div class="relative">
+                                    <div class="absolute -left-[32px] top-1 w-5 h-5 rounded-full bg-cyan-600 border-4 border-white z-10"></div>
+                                    <h4 class="font-bold text-slate-800">下午 - 豪斯登堡早入 Check-in (捨棄波佐見)</h4>
+                                    <p class="text-slate-600 text-sm mt-1">15:30 進入園區辦理入住。剛好迎接日落並欣賞 16:30 開始的全日本最大規模燈光秀。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Day 6 - Indigo -->
+                <div class="bg-white rounded-2xl shadow-sm border p-8 day-card">
+                    <div class="flex flex-col md:flex-row gap-8">
+                        <div class="md:w-32 flex-shrink-0 text-center">
+                            <div class="bg-indigo-600 text-white rounded-2xl p-4 shadow-lg">
+                                <p class="text-sm opacity-80">1/29 (五)</p>
+                                <p class="text-2xl font-bold tracking-tighter">Day 6</p>
+                            </div>
+                        </div>
+                        <div class="flex-grow">
+                            <h2 class="text-2xl font-bold mb-6 text-slate-800 text-indigo-700">🎡 豪斯登堡全日暢玩 (連住)</h2>
+                            <div class="timeline-line pl-10 space-y-8">
+                                <div class="relative">
+                                    <div class="absolute -left-[32px] top-1 w-5 h-5 rounded-full bg-indigo-600 border-4 border-white z-10"></div>
+                                    <h4 class="font-bold text-slate-800">室內 VR 世界與慢漫運河</h4>
+                                    <p class="text-slate-600 text-sm mt-1">今日主攻室內設施，不畏寒風。全家悠雅慢遊運河。晚餐品嚐起司火鍋與長崎檸檬牛排。</p>
+                                    <div class="bg-indigo-50 border border-indigo-100 p-3 rounded-lg text-sm text-indigo-700 mt-3">
+                                        <i class="fas fa-utensils mr-2 text-indigo-500"></i> <strong>今日必吃：</strong>檸檬牛排 (Sasebo Style)。
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Day 7 - Violet -->
+                <div class="bg-white rounded-2xl shadow-sm border p-8 day-card">
+                    <div class="flex flex-col md:flex-row gap-8">
+                        <div class="md:w-32 flex-shrink-0 text-center">
+                            <div class="bg-violet-600 text-white rounded-2xl p-4 shadow-lg">
+                                <p class="text-sm opacity-80">1/30 (六)</p>
+                                <p class="text-2xl font-bold tracking-tighter">Day 7</p>
+                            </div>
+                        </div>
+                        <div class="flex-grow">
+                            <h2 class="text-2xl font-bold mb-6 text-slate-800 text-violet-700">🤖 鋼彈立像與終極和牛晚宴</h2>
+                            <div class="timeline-line pl-10 space-y-8">
+                                <div class="relative">
+                                    <div class="absolute -left-[32px] top-1 w-5 h-5 rounded-full bg-violet-600 border-4 border-white z-10"></div>
+                                    <h4 class="font-bold text-slate-800">上午 - 返回福岡 (還車)</h4>
+                                    <p class="text-slate-600 text-sm mt-1">驅車返回福岡還車。隨後搭巴士前往 LaLaport 福岡朝聖 1:1 v鋼彈立像。</p>
+                                </div>
+                                <div class="relative">
+                                    <div class="absolute -left-[32px] top-1 w-5 h-5 rounded-full bg-violet-600 border-4 border-white z-10"></div>
+                                    <h4 class="font-bold text-slate-800">晚上 - 和牛燒肉晚宴</h4>
+                                    <p class="text-slate-600 text-sm mt-1">預訂「燒肉 Champion」。確實打包行李：回台(太太)與滑雪(父子)。</p>
+                                    <div class="bg-violet-50 border border-violet-100 p-3 rounded-lg text-sm font-bold text-violet-700 mt-3">
+                                        <i class="fas fa-fire mr-2 text-violet-500"></i> <strong>告別大餐：</strong>博多黑毛和牛 & AMAOU 草莓。
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Day 8 - 12 (Summary) -->
+                <div class="bg-indigo-900 rounded-2xl shadow-xl p-8 text-white">
+                    <h3 class="text-2xl font-bold mb-6 flex items-center gap-2 border-b border-indigo-700 pb-4">
+                        <i class="fas fa-snowflake"></i> 北海道家族銜接段 (1/31 - 2/4)
+                    </h3>
+                    <div class="space-y-6">
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 rounded-full bg-indigo-700 flex items-center justify-center flex-shrink-0 font-bold text-xs text-indigo-200 uppercase">Jan 31</div>
+                            <div>
+                                <p class="font-bold text-indigo-200 text-lg">分流與機場會合</p>
+                                <p class="text-sm text-indigo-100 mt-1">太太 CI111 回台；父子 ANA 往新千歲與家族大會合，包車直奔 Sahoro。</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 rounded-full bg-indigo-700 flex items-center justify-center flex-shrink-0 font-bold text-xs text-indigo-200 uppercase">Feb 1-3</div>
+                            <div>
+                                <p class="font-bold text-indigo-200 text-lg">全包式滑雪營假期</p>
+                                <p class="text-sm text-indigo-100 mt-1 italic opacity-80">父子共學滑雪，晚上全家族共享美食盛宴。</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4 border-t border-indigo-700 pt-4">
+                            <div class="w-12 h-12 rounded-full bg-white text-indigo-900 flex items-center justify-center flex-shrink-0 font-bold text-xs">Feb 4</div>
+                            <div>
+                                <p class="font-bold text-white text-lg">回程航班：酷航 TR893</p>
+                                <p class="text-sm text-indigo-100 mt-1">大家族全員集合，一同搭乘 <strong>TR893</strong> 平安抵台。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            
+            <footer class="mt-16 text-center text-slate-400 text-sm border-t pt-8">
+                <p>Designed by 您的專屬旅遊嚮導 | 祝您旅途愉快！</p>
+            </footer>
+        </main>
+    </div>
+
+    <script>
+        function checkPassword() {
+            const pwdInput = document.getElementById('password-input');
+            const pwd = pwdInput.value;
+            const errorMsg = document.getElementById('error-msg');
+            
+            if(pwd === '2026') {
+                const loginScreen = document.getElementById('login-screen');
+                loginScreen.style.opacity = '0';
+                setTimeout(() => {
+                    loginScreen.style.display = 'none';
+                    const mainContent = document.getElementById('main-content');
+                    mainContent.classList.remove('hidden');
+                    mainContent.classList.add('fade-in');
+                }, 300);
+            } else {
+                errorMsg.classList.remove('hidden');
+                pwdInput.value = '';
+                pwdInput.classList.add('border-red-500');
+                setTimeout(() => { pwdInput.classList.remove('border-red-500'); }, 2000);
+            }
+        }
+        document.getElementById('password-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') { checkPassword(); }
+        });
+    </script>
+</body>
+</html>
