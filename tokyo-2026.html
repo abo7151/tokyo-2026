@@ -1,290 +1,337 @@
-import React, { useState } from 'react';
-import { Plane, MapPin, Sparkles, LogOut, Lock, Home, Zap, Utensils, Camera, Compass, Clock, Train, ShoppingBag, Microscope, ChevronRight, Info, AlertTriangle, Ticket, Landmark, TreePine } from 'lucide-react';
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026 東京之旅 | 專屬行程規劃</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
+        body { font-family: 'Noto Sans TC', sans-serif; scroll-behavior: smooth; background-color: #f9fafb; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .glass-morphism {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        /* 密碼鎖層樣式 */
+        #password-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #4f46e5 0%, #7e22ce 100%);
+            color: white;
+            transition: opacity 0.5s ease;
+        }
+        #main-content {
+            display: none; /* 預設隱藏所有內容 */
+        }
+    </style>
+</head>
+<body class="text-gray-800 pb-20">
 
-const App = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [password, setPassword] = useState('');
-  const [activeTab, setActiveTab] = useState('itinerary');
-  const [errorMsg, setErrorMsg] = useState(false);
-
-  const TRIP_PASSWORD = "2026";
-
-  const handleLogin = () => {
-    if (password === TRIP_PASSWORD) {
-      setIsAuthenticated(true);
-    } else {
-      setErrorMsg(true);
-      setPassword('');
-    }
-  };
-
-  if (!isAuthenticated) {
-    return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-indigo-600 to-purple-700 p-4 font-sans">
-        <div className="bg-white/95 backdrop-blur shadow-2xl rounded-3xl p-8 w-full max-w-sm text-center border border-white/20">
-          <div className="mb-6 flex justify-center">
-            <div className="p-4 bg-indigo-100 rounded-full text-indigo-600">
-              <Lock className="w-10 h-10" />
+    <!-- 密碼鎖畫面 -->
+    <div id="password-overlay">
+        <div class="glass-morphism p-8 rounded-3xl shadow-2xl text-center max-w-sm w-full mx-4 border border-white/30 text-gray-800 bg-white/95">
+            <div class="mb-6 flex justify-center">
+                <div class="p-4 bg-indigo-100 rounded-full text-indigo-600">
+                    <i data-lucide="lock" class="w-10 h-10"></i>
+                </div>
             </div>
-          </div>
-          <h1 className="text-2xl font-bold mb-2 text-gray-800">2026 東京之旅</h1>
-          <p className="text-sm text-gray-500 mb-6">請輸入通關密碼以檢視行程表</p>
-          <div className="space-y-4">
-            <input 
-              type="password" 
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              onKeyPress={(e) => e.key === 'Enter' && handleLogin()}
-              placeholder="請輸入密碼" 
-              className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-center text-lg tracking-widest"
-            />
-            <button 
-              onClick={handleLogin}
-              className="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold transition-all shadow-lg active:scale-95"
-            >
-              進入行程表
-            </button>
-          </div>
-          {errorMsg && <p className="mt-4 text-red-500 text-sm">密碼錯誤，請再試一次。</p>}
-          <p className="mt-6 text-xs text-gray-400">提示：預設密碼為 2026</p>
+            <h1 class="text-2xl font-bold mb-2 text-gray-800">2026 東京之旅</h1>
+            <p class="text-sm text-gray-500 mb-6">請輸入通關密碼以檢視行程表</p>
+            <div class="space-y-4">
+                <input type="password" id="trip-password" placeholder="請輸入密碼" 
+                       class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-center text-lg tracking-widest"
+                       onkeypress="if(event.key === 'Enter') checkPassword()">
+                <button onclick="checkPassword()" 
+                        class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold transition-all shadow-lg active:scale-95">
+                    進入行程表
+                </button>
+            </div>
+            <p id="error-msg" class="mt-4 text-red-500 text-sm hidden">密碼錯誤，請再試一次。</p>
+            <p class="mt-6 text-xs text-gray-400">提示：預設密碼為 2026</p>
         </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="min-h-screen bg-gray-50 text-gray-800 font-sans pb-20">
-      {/* Hero Section */}
-      <header className="relative h-[40vh] flex items-center justify-center text-white overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&q=80&w=2000" alt="Tokyo" className="w-full h-full object-cover brightness-50" />
-        </div>
-        <div className="relative z-10 text-center px-4">
-          <h1 className="text-4xl md:text-6xl font-bold mb-2 tracking-tight">2026 東京之旅</h1>
-          <p className="text-xl opacity-90 font-light">4/30 (Thu) - 5/03 (Sun) · 四天三夜專屬行程</p>
-        </div>
-      </header>
-
-      {/* Navigation */}
-      <nav className="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm">
-        <div className="max-w-4xl mx-auto flex justify-around p-4">
-          <button 
-            onClick={() => setActiveTab('itinerary')}
-            className={`flex items-center gap-2 font-medium pb-1 transition-all ${activeTab === 'itinerary' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-500 hover:text-blue-600'}`}
-          >
-            <Compass className="w-4 h-4" /> 行程詳情
-          </button>
-          <button 
-            onClick={() => setActiveTab('budget')}
-            className={`flex items-center gap-2 font-medium pb-1 transition-all ${activeTab === 'budget' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-500 hover:text-blue-600'}`}
-          >
-            <ShoppingBag className="w-4 h-4" /> 預算清單
-          </button>
-          <button 
-            onClick={() => setActiveTab('tips')}
-            className={`flex items-center gap-2 font-medium pb-1 transition-all ${activeTab === 'tips' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-500 hover:text-blue-600'}`}
-          >
-            <Info className="w-4 h-4" /> 嚮導建議
-          </button>
-        </div>
-      </nav>
-
-      <main className="max-w-4xl mx-auto p-4 md:p-8 space-y-12">
-        {activeTab === 'itinerary' && (
-          <div className="space-y-10">
-            {/* Day 1: 4/30 */}
-            <div className="bg-white rounded-3xl shadow-md overflow-hidden border border-gray-100">
-              <div className="bg-blue-600 text-white p-5 flex items-center justify-between">
-                <h2 className="text-xl font-bold flex items-center gap-2"><Plane className="w-6 h-6" /> Day 1 · 4/30 (四) 出發與抵達</h2>
-                <span className="text-xs bg-white/20 px-2 py-1 rounded-full uppercase tracking-widest font-bold font-sans">Departure</span>
-              </div>
-              <div className="p-6 space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="p-4 bg-blue-50 rounded-2xl border border-blue-100">
-                    <div className="flex items-center gap-2 mb-1 text-blue-700 font-bold"><Clock className="w-4 h-4" /> 17:30 從家出發</div>
-                    <p className="text-sm text-gray-600 italic">確保 18:30 前抵達桃機 T1 辦理 Check-in。</p>
-                  </div>
-                  <div className="p-4 bg-gray-50 rounded-2xl border border-gray-100">
-                    <div className="flex items-center gap-2 mb-1 text-gray-700 font-bold"><Zap className="w-4 h-4" /> MM860 航班</div>
-                    <p className="text-sm text-gray-600">20:25 起飛 ➜ 00:45+1 抵達羽田 (HND)。</p>
-                  </div>
-                </div>
-                <div className="p-4 bg-indigo-50 rounded-2xl border border-indigo-200">
-                  <div className="flex items-center gap-2 mb-2 font-bold text-indigo-800"><Home className="w-5 h-5" /> 住宿：Hotel Villa Fontaine Grand 羽田機場</div>
-                  <p className="text-sm text-gray-700">機場航廈直通，領完行李 10 分鐘內即可入住休息。</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Day 2: 5/1 */}
-            <div className="bg-white rounded-3xl shadow-md overflow-hidden border border-gray-100">
-              <div className="bg-indigo-600 text-white p-5">
-                <h2 className="text-xl font-bold flex items-center gap-2"><MapPin className="w-6 h-6" /> Day 2 · 5/01 (五) 下町文化與新宿購物</h2>
-              </div>
-              <div className="p-6 space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="p-4 bg-gray-50 rounded-2xl border border-indigo-100">
-                    <div className="flex items-center gap-2 mb-2 text-indigo-700 font-bold"><Landmark className="w-5 h-5" /> 上午：上野 & 淺草</div>
-                    <p className="text-sm text-gray-600 mb-3">先去 TABI 上野寄放行李，隨後參訪淺草寺雷門。</p>
-                    <div className="bg-white p-2 rounded-lg text-xs border border-indigo-50 space-y-1 font-sans">
-                      <p className="font-bold flex items-center gap-1 text-indigo-600"><Train className="w-3 h-3" /> 交通建議：</p>
-                      <p>● 上野 ➜ 淺草：銀座線 (5分鐘)</p>
-                      <p>● 淺草 ➜ 新宿：銀座線至赤坂見附轉丸之內線</p>
-                    </div>
-                  </div>
-                  <div className="p-4 bg-gray-50 rounded-2xl border border-indigo-100">
-                    <div className="flex items-center gap-2 mb-2 text-indigo-700 font-bold"><TreePine className="w-5 h-5" /> 下午：新宿御苑散策</div>
-                    <p className="text-sm text-gray-600 mb-3">享受城市綠洲。隨後步行 8-10 分鐘可達新宿東口商圈。</p>
-                  </div>
-                </div>
-                
-                <div className="p-5 bg-blue-50 rounded-2xl border border-blue-200">
-                  <div className="flex items-center gap-2 mb-2 font-bold text-blue-800"><Zap className="w-5 h-5" /> 重點站：Alpen TOKYO (1F On Shop)</div>
-                  <p className="text-sm text-gray-700 leading-relaxed mb-3">體驗魔法取鞋牆。購物後步行即可抵達 Lumine Est 享用利久牛舌。</p>
-                </div>
-
-                <div className="p-4 bg-indigo-50 rounded-2xl flex items-start gap-4 border border-indigo-100">
-                  <Utensils className="text-indigo-600 mt-1 w-5 h-5 shrink-0" />
-                  <div>
-                    <h3 className="font-bold text-indigo-800">晚餐：Lumine Est 利久牛舌</h3>
-                    <p className="text-sm text-gray-700 leading-relaxed italic">位於新宿站東口。回程搭乘地鐵銀座線或 JR 山手線回上野。</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Day 3: 5/2 */}
-            <div className="bg-white rounded-3xl shadow-md overflow-hidden border border-gray-100">
-              <div className="bg-purple-600 text-white p-5">
-                <h2 className="text-xl font-bold flex items-center gap-2"><Sparkles className="w-6 h-6" /> Day 3 · 5/02 (六) 藤花與藝術之旅</h2>
-              </div>
-              <div className="p-6 space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="p-4 bg-gray-50 rounded-2xl border border-purple-100 font-sans">
-                    <div className="flex items-center gap-2 mb-2 text-purple-700 font-bold"><Camera className="w-5 h-5" /> 上午：龜戶天神社</div>
-                    <p className="text-sm text-gray-600">賞紫藤與晴空塔。黃金週人潮高峰，務必 08:30 前抵達以確保拍照品質。</p>
-                  </div>
-                  <div className="p-4 bg-gray-50 rounded-2xl border border-purple-100 font-sans">
-                    <div className="flex items-center gap-2 mb-2 text-purple-700 font-bold"><Compass className="w-5 h-5" /> 下午：麻布台 Hills</div>
-                    <p className="text-sm text-gray-600">探索日本新地標與時尚咖啡廳。隨後步行至 teamLab 展區。</p>
-                  </div>
-                </div>
-                
-                <div className="p-5 bg-purple-50 rounded-2xl border border-purple-200">
-                  <div className="flex items-center gap-2 mb-2 font-bold text-purple-800"><Zap className="w-5 h-5" /> 核心行程：teamLab Borderless (15:00)</div>
-                  <p className="text-sm text-gray-700 mb-2">沉浸式光影藝術體驗。看完展後可搭乘日比谷線直達上野。</p>
-                </div>
-
-                <div className="p-4 bg-gray-50 rounded-2xl border border-gray-100 flex gap-4">
-                  <ShoppingBag className="text-gray-400 shrink-0 mt-1" />
-                  <div>
-                    <h3 className="font-bold text-gray-800">晚上：上野阿美橫丁</h3>
-                    <p className="text-sm text-gray-500 italic font-sans">最後衝刺採買藥妝、零食。晚餐推薦在阿美橫丁體驗在地居酒屋文化。</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Day 4: 5/3 */}
-            <div className="bg-white rounded-3xl shadow-md overflow-hidden border border-gray-100">
-              <div className="bg-emerald-600 text-white p-5">
-                <h2 className="text-xl font-bold flex items-center gap-2"><LogOut className="w-6 h-6" /> Day 4 · 5/03 (日) 科博館與平安返家</h2>
-              </div>
-              <div className="p-6 space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 font-sans text-sm">
-                  <div className="p-4 bg-gray-50 rounded-2xl border border-emerald-100">
-                    <div className="flex items-center gap-2 mb-2 text-emerald-700 font-bold"><Microscope className="w-5 h-5" /> 上午：國立科學博物館</div>
-                    <p>上野公園內。推薦重點：地球館。看展後回 TABI 上野領取行李。</p>
-                  </div>
-                  <div className="p-4 bg-gray-50 rounded-2xl border border-emerald-100">
-                    <div className="flex items-center gap-2 mb-2 text-emerald-700 font-bold"><Ticket className="w-5 h-5" /> 下午：Skyliner 劃位返程</div>
-                    <p>前往京成上野站進行兌換。黃金週車次熱門，建議提早 15-20 分鐘抵達車站劃位。</p>
-                  </div>
-                </div>
-
-                <div className="p-5 bg-emerald-50 rounded-2xl border border-emerald-200">
-                  <div className="flex items-center gap-2 mb-4 font-bold text-emerald-800"><Train className="w-5 h-5" /> 交通：Skyliner 往成田 (NRT)</div>
-                  <div className="space-y-4 font-sans">
-                    <div className="flex justify-between items-center bg-white p-4 rounded-xl border border-emerald-100">
-                      <div>
-                        <p className="font-bold text-xs uppercase tracking-wide">建議劃位班次</p>
-                        <p className="text-lg font-bold text-emerald-600 mt-1 italic">13:40 班次</p>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-xs text-gray-500">抵達成田 T2：14:21</p>
-                        <p className="text-xs text-blue-600 font-bold mt-1">預留 2.5 小時 Check-in</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-4 text-sm font-bold border-t border-emerald-100 pt-4">
-                      <div className="text-gray-400 font-mono w-24 text-right">16:50 🛫</div>
-                      <div className="text-emerald-800">MM625 航班起飛 ➜ 19:40 🛬 台北抵達</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {activeTab === 'budget' && (
-          <div className="bg-white p-8 rounded-3xl shadow-md border border-gray-100 font-sans">
-            <h2 className="text-2xl font-bold mb-8 text-blue-600 flex items-center gap-2"><ShoppingBag className="w-6 h-6" /> 預算明細</h2>
-            <div className="space-y-4">
-              <div className="flex justify-between border-b pb-3"><span>機票 (兩人總計)</span><span className="font-bold text-gray-700">$50,232 TWD</span></div>
-              <div className="flex justify-between border-b pb-3"><span>住宿 (Hotel Villa Fontaine)</span><span className="font-bold text-gray-700">$4,703 TWD</span></div>
-              <div className="flex justify-between border-b pb-3"><span>住宿 (TABI 上野)</span><span class="font-bold text-gray-700">¥95,472 JPY</span></div>
-              <div className="flex justify-between border-b pb-3"><span>teamLab 門票 (兩大)</span><span class="font-bold text-gray-700">¥11,500 JPY</span></div>
-              <div className="flex justify-between border-b pb-3 text-blue-700 font-bold"><span>Skyliner 票券 (三人折後)</span><span>$970 TWD</span></div>
-              <div className="flex justify-between border-b pb-3"><span>Sim 卡 (iVideo)</span><span class="font-bold text-gray-700">$586 TWD</span></div>
-              <div className="flex justify-between pt-4 text-lg border-t-2 border-gray-100">
-                <span className="font-bold">總計預估 (未含餐費)</span>
-                <div className="text-right">
-                  <p className="text-blue-600 font-bold tracking-tight">$56,491 TWD</p>
-                  <p className="text-sm text-gray-400 font-light">+ ¥106,972 JPY</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {activeTab === 'tips' && (
-          <div className="space-y-6 font-sans">
-            <div className="bg-indigo-50 p-6 rounded-3xl border border-indigo-200">
-              <h2 className="text-xl font-bold mb-4 text-indigo-800 flex items-center gap-2"><Ticket className="w-6 h-6" /> Skyliner 兌換與劃位攻略</h2>
-              <div className="space-y-4 text-sm text-gray-700 leading-relaxed">
-                <div className="bg-white p-4 rounded-xl border border-indigo-100">
-                  <p className="font-bold text-blue-700 mb-2">1. 兌換細節</p>
-                  <p>憑 Klook/KKday QR Code 與護照，可在京成上野站的售票機或櫃檯劃位。自動售票機介面有繁體中文，操作非常直覺。</p>
-                </div>
-                <div className="bg-white p-4 rounded-xl border border-indigo-100">
-                  <p className="font-bold text-blue-700 mb-2">2. 時間規劃 (重要)</p>
-                  <p>5/3 是黃金週憲法紀念日。雖然 Skyliner 票券買好了，但**強烈建議在 Day 2 抵達上野後，就順便去車站把 Day 4 回程的位子劃好**，確保連假有位。</p>
-                </div>
-                <div className="bg-white p-4 rounded-xl border border-indigo-100">
-                  <p className="font-bold text-red-600 mb-2">3. 推薦劃位班次</p>
-                  <p>建議劃 <b>13:40 (發)</b>，大約 14:21 到成田二航。16:50 起飛的航班，建議最晚 14:30 抵達機場辦理登機，以應對黃金週安檢人潮。</p>
-                </div>
-              </div>
-            </div>
-            
-            <div className="bg-blue-50 p-6 rounded-3xl border border-blue-200">
-              <h2 className="text-xl font-bold mb-4 text-blue-800 flex items-center gap-2"><AlertTriangle className="w-6 h-6" /> 黃金週特別叮嚀</h2>
-              <ul className="list-disc ml-5 space-y-2 text-sm text-blue-900 leading-relaxed">
-                <li><b>安檢人潮：</b>5/3 回程當天成田機場人潮會非常擁擠，務必提前報到。</li>
-                <li><b>數位交通卡：</b>Suica / Pasmo 請先加到 iPhone Wallet 並儲值好。</li>
-                <li><b>Visit Japan Web：</b>截圖入境與海關 QR Code，減少在機場連 WiFi 的麻煩。</li>
-              </ul>
-            </div>
-          </div>
-        )}
-      </main>
-
-      <footer className="text-center py-12 text-gray-400 text-xs font-light">
-          <p>© 2026 Tokyo Adventure Planner</p>
-          <p>專業旅遊嚮導 已修正回程時間 (MM625: 16:50 ➜ 19:40)</p>
-      </footer>
     </div>
-  );
-};
 
-export default App;
+    <!-- 行程表主內容 -->
+    <div id="main-content">
+        <!-- Hero Section -->
+        <header class="relative h-[40vh] flex items-center justify-center text-white overflow-hidden bg-indigo-900">
+            <img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&q=80&w=2000" 
+                 alt="Tokyo" 
+                 class="absolute inset-0 w-full h-full object-cover brightness-50" />
+            <div class="relative z-10 text-center px-4">
+                <h1 class="text-4xl md:text-6xl font-bold mb-2 tracking-tight">2026 東京之旅</h1>
+                <p class="text-xl opacity-90 font-light">4/30 (Thu) - 5/03 (Sun) · 四天三夜專屬行程</p>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm">
+            <div class="max-w-4xl mx-auto flex justify-around p-4">
+                <button onclick="switchTab('itinerary')" id="btn-itinerary" class="tab-btn flex items-center gap-2 font-medium pb-1 transition-all text-blue-600 border-b-2 border-blue-600">
+                    <i data-lucide="compass" class="w-4 h-4"></i> 行程詳情
+                </button>
+                <button onclick="switchTab('budget')" id="btn-budget" class="tab-btn flex items-center gap-2 font-medium pb-1 transition-all text-gray-500 hover:text-blue-600">
+                    <i data-lucide="shopping-bag" class="w-4 h-4"></i> 預算清單
+                </button>
+                <button onclick="switchTab('tips')" id="btn-tips" class="tab-btn flex items-center gap-2 font-medium pb-1 transition-all text-gray-500 hover:text-blue-600">
+                    <i data-lucide="info" class="w-4 h-4"></i> 嚮導建議
+                </button>
+            </div>
+        </nav>
+
+        <main class="max-w-4xl mx-auto p-4 md:p-8 space-y-12">
+            
+            <!-- Tab: Itinerary -->
+            <div id="itinerary" class="tab-content active space-y-10">
+                <!-- Day 1 -->
+                <div class="bg-white rounded-3xl shadow-md overflow-hidden border border-gray-100">
+                    <div class="bg-blue-600 text-white p-5 flex items-center justify-between">
+                        <h2 class="text-xl font-bold flex items-center gap-2"><i data-lucide="plane" class="w-6 h-6"></i> Day 1 · 4/30 (四) 出發與抵達</h2>
+                        <span class="text-xs bg-white/20 px-2 py-1 rounded-full uppercase tracking-widest font-bold">Departure</span>
+                    </div>
+                    <div class="p-6 space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="p-4 bg-blue-50 rounded-2xl border border-blue-100">
+                                <div class="flex items-center gap-2 mb-1 text-blue-700 font-bold"><i data-lucide="clock" class="w-4 h-4"></i> 17:30 從家出發</div>
+                                <p class="text-sm text-gray-600 italic">確保 18:30 前抵達桃機 T1 辦理 Check-in。</p>
+                            </div>
+                            <div class="p-4 bg-gray-50 rounded-2xl border border-gray-100">
+                                <div class="flex items-center gap-2 mb-1 text-gray-700 font-bold"><i data-lucide="zap" class="w-4 h-4"></i> MM860 航班</div>
+                                <p class="text-sm text-gray-600">20:25 起飛 ➜ 00:45+1 抵達羽田 (HND)。</p>
+                            </div>
+                        </div>
+                        <div class="p-4 bg-indigo-50 rounded-2xl border border-indigo-200">
+                            <div class="flex items-center gap-2 mb-2 font-bold text-indigo-800"><i data-lucide="home" class="w-5 h-5"></i> 住宿：Hotel Villa Fontaine Grand 羽田機場</div>
+                            <p class="text-sm text-gray-700">機場航廈直通，領完行李 10 分鐘內即可入住休息。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Day 2 -->
+                <div class="bg-white rounded-3xl shadow-md overflow-hidden border border-gray-100">
+                    <div class="bg-indigo-600 text-white p-5">
+                        <h2 class="text-xl font-bold flex items-center gap-2"><i data-lucide="map-pin" class="w-6 h-6"></i> Day 2 · 5/01 (五) 下町文化與新宿購物</h2>
+                    </div>
+                    <div class="p-6 space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="p-4 bg-gray-50 rounded-2xl border border-indigo-100">
+                                <div class="flex items-center gap-2 mb-2 text-indigo-700 font-bold"><i data-lucide="landmark" class="w-5 h-5"></i> 上午：上野 & 淺草</div>
+                                <p class="text-sm text-gray-600 mb-3">先去 TABI 上野寄放行李，隨後參訪淺草寺雷門。</p>
+                                <div class="bg-white p-2 rounded-lg text-xs border border-indigo-50 space-y-1">
+                                    <p class="font-bold flex items-center gap-1 text-indigo-600"><i data-lucide="train" class="w-3 h-3"></i> 交通建議：</p>
+                                    <p>● 上野 ➜ 淺草：銀座線 (5分鐘)</p>
+                                    <p>● 淺草 ➜ 新宿：銀座線至赤坂見附轉丸之內線</p>
+                                </div>
+                            </div>
+                            <div class="p-4 bg-gray-50 rounded-2xl border border-indigo-100">
+                                <div class="flex items-center gap-2 mb-2 text-indigo-700 font-bold"><i data-lucide="tree-pine" class="w-5 h-5"></i> 下午：新宿御苑散策</div>
+                                <p class="text-sm text-gray-600 mb-3">享受城市綠洲。隨後步行 8-10 分鐘可達新宿東口商圈。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="p-5 bg-blue-50 rounded-2xl border border-blue-200">
+                            <div class="flex items-center gap-2 mb-2 font-bold text-blue-800"><i data-lucide="zap" class="w-5 h-5"></i> 重點站：Alpen TOKYO (1F On Shop)</div>
+                            <p class="text-sm text-gray-700 leading-relaxed mb-3">體驗魔法取鞋牆。購物後步行即可抵達 Lumine Est 享用利久牛舌。</p>
+                        </div>
+
+                        <div class="p-4 bg-indigo-50 rounded-2xl flex items-start gap-4 border border-indigo-100">
+                            <i data-lucide="utensils" class="text-indigo-600 mt-1 w-5 h-5 shrink-0"></i>
+                            <div>
+                                <h3 class="font-bold text-indigo-800">晚餐：Lumine Est 利久牛舌</h3>
+                                <p class="text-sm text-gray-700 leading-relaxed italic">位於新宿站東口。回程搭乘地鐵銀座線或 JR 山手線回上野。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Day 3 -->
+                <div class="bg-white rounded-3xl shadow-md overflow-hidden border border-gray-100">
+                    <div class="bg-purple-600 text-white p-5">
+                        <h2 class="text-xl font-bold flex items-center gap-2"><i data-lucide="sparkles" class="w-6 h-6"></i> Day 3 · 5/02 (六) 藤花與藝術之旅</h2>
+                    </div>
+                    <div class="p-6 space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="p-4 bg-gray-50 rounded-2xl border border-purple-100">
+                                <div class="flex items-center gap-2 mb-2 text-purple-700 font-bold"><i data-lucide="camera" class="w-5 h-5"></i> 上午：龜戶天神社</div>
+                                <p class="text-sm text-gray-600">賞紫藤與晴空塔。黃金週人潮高峰，務必 08:30 前抵達以確保拍照品質。</p>
+                            </div>
+                            <div class="p-4 bg-gray-50 rounded-2xl border border-purple-100">
+                                <div class="flex items-center gap-2 mb-2 text-purple-700 font-bold"><i data-lucide="compass" class="w-5 h-5"></i> 下午：麻布台 Hills</div>
+                                <p class="text-sm text-gray-600">探索日本新地標與時尚咖啡廳。隨後步行至 teamLab 展區。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="p-5 bg-purple-50 rounded-2xl border border-purple-200">
+                            <div class="flex items-center gap-2 mb-2 font-bold text-purple-800"><i data-lucide="zap" class="w-5 h-5"></i> 核心行程：teamLab Borderless (15:00)</div>
+                            <p class="text-sm text-gray-700 mb-2">沉浸式光影藝術體驗。看完展後可搭乘日比谷線直達上野。</p>
+                        </div>
+
+                        <div class="p-4 bg-gray-50 rounded-2xl border border-gray-100 flex gap-4">
+                            <i data-lucide="shopping-bag" class="text-gray-400 shrink-0 mt-1"></i>
+                            <div>
+                                <h3 class="font-bold text-gray-800">晚上：上野阿美橫丁</h3>
+                                <p class="text-sm text-gray-500 italic">最後衝刺採買藥妝、零食。晚餐推薦在阿美橫丁體驗在地居酒屋文化。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Day 4 -->
+                <div class="bg-white rounded-3xl shadow-md overflow-hidden border border-gray-100">
+                    <div class="bg-emerald-600 text-white p-5">
+                        <h2 class="text-xl font-bold flex items-center gap-2"><i data-lucide="log-out" class="w-6 h-6"></i> Day 4 · 5/03 (日) 科博館與平安返家</h2>
+                    </div>
+                    <div class="p-6 space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                            <div class="p-4 bg-gray-50 rounded-2xl border border-emerald-100">
+                                <div class="flex items-center gap-2 mb-2 text-emerald-700 font-bold"><i data-lucide="microscope" class="w-5 h-5"></i> 上午：國立科學博物館</div>
+                                <p>上野公園內。推薦重點：地球館。看展後回 TABI 上野領取行李。</p>
+                            </div>
+                            <div class="p-4 bg-gray-50 rounded-2xl border border-emerald-100">
+                                <div class="flex items-center gap-2 mb-2 text-emerald-700 font-bold"><i data-lucide="ticket" class="w-5 h-5"></i> 下午：Skyliner 劃位返程</div>
+                                <p>前往京成上野站進行兌換。黃金週車次熱門，建議提早 15-20 分鐘抵達車站劃位。</p>
+                            </div>
+                        </div>
+
+                        <div class="p-5 bg-emerald-50 rounded-2xl border border-emerald-200">
+                            <div class="flex items-center gap-2 mb-4 font-bold text-emerald-800"><i data-lucide="train" class="w-5 h-5"></i> 交通：Skyliner 往成田 (NRT)</div>
+                            <div class="space-y-4">
+                                <div class="flex justify-between items-center bg-white p-4 rounded-xl border border-emerald-100">
+                                    <div>
+                                        <p class="font-bold text-xs uppercase tracking-wide">建議劃位班次</p>
+                                        <p class="text-lg font-bold text-emerald-600 mt-1 italic">13:40 班次</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-xs text-gray-500">抵達成田 T2：14:21</p>
+                                        <p class="text-xs text-blue-600 font-bold mt-1">預留 2.5 小時 Check-in</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-4 text-sm font-bold border-t border-emerald-100 pt-4">
+                                    <div class="text-gray-400 font-mono w-24 text-right">16:50 🛫</div>
+                                    <div class="text-emerald-800">MM625 航班起飛 ➜ 19:40 🛬 台北抵達</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab: Budget -->
+            <div id="budget" class="tab-content space-y-6">
+                <div class="bg-white p-8 rounded-3xl shadow-md border border-gray-100">
+                    <h2 class="text-2xl font-bold mb-8 text-blue-600 flex items-center gap-2">
+                        <i data-lucide="shopping-bag" class="w-6 h-6"></i> 預算明細
+                    </h2>
+                    <div class="space-y-4">
+                        <div class="flex justify-between border-b pb-3"><span>機票 (兩人總計)</span><span class="font-bold text-gray-700">$50,232 TWD</span></div>
+                        <div class="flex justify-between border-b pb-3"><span>住宿 (Hotel Villa Fontaine)</span><span class="font-bold text-gray-700">$4,703 TWD</span></div>
+                        <div class="flex justify-between border-b pb-3"><span>住宿 (TABI 上野)</span><span class="font-bold text-gray-700">¥95,472 JPY</span></div>
+                        <div class="flex justify-between border-b pb-3"><span>teamLab 門票 (兩大)</span><span class="font-bold text-gray-700">¥11,500 JPY</span></div>
+                        <div class="flex justify-between border-b pb-3 text-blue-700 font-bold"><span>Skyliner 票券 (三人折後)</span><span>$970 TWD</span></div>
+                        <div class="flex justify-between border-b pb-3"><span>Sim 卡 (iVideo)</span><span class="font-bold text-gray-700">$586 TWD</span></div>
+                        <div class="flex justify-between pt-4 text-lg border-t-2 border-gray-100">
+                            <span class="font-bold">總計預估 (未含餐費)</span>
+                            <div class="text-right">
+                                <p class="text-blue-600 font-bold tracking-tight">$56,491 TWD</p>
+                                <p class="text-sm text-gray-400 font-light">+ ¥106,972 JPY</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab: Tips -->
+            <div id="tips" class="tab-content space-y-6">
+                <div class="bg-indigo-50 p-6 rounded-3xl border border-indigo-200">
+                    <h2 class="text-xl font-bold mb-4 text-indigo-800 flex items-center gap-2">
+                        <i data-lucide="ticket" class="w-6 h-6"></i> Skyliner 兌換與劃位攻略
+                    </h2>
+                    <div class="space-y-4 text-sm text-gray-700 leading-relaxed">
+                        <div class="bg-white p-4 rounded-xl border border-indigo-100">
+                            <p class="font-bold text-blue-700 mb-2">1. 兌換細節</p>
+                            <p>憑 Klook/KKday QR Code 與護照，可在京成上野站的售票機或櫃檯劃位。自動售票機介面有繁體中文，操作非常直覺。</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-xl border border-indigo-100">
+                            <p class="font-bold text-blue-700 mb-2">2. 時間規劃 (重要)</p>
+                            <p>5/3 是黃金週憲法紀念日。雖然 Skyliner 票券買好了，但**強烈建議在 Day 2 抵達上野後，就順便去車站把 Day 4 回程的位子劃好**，確保連假有位。</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-xl border border-indigo-100">
+                            <p class="font-bold text-red-600 mb-2">3. 推薦劃位班次</p>
+                            <p>建議劃 <b>13:40 (發)</b>，大約 14:21 到成田二航。16:50 起飛的航班，建議最晚 14:30 抵達機場辦理登機，以應對黃金週安檢人潮。</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-blue-50 p-6 rounded-3xl border border-blue-200">
+                    <h2 class="text-xl font-bold mb-4 text-blue-800 flex items-center gap-2">
+                        <i data-lucide="alert-triangle" class="w-6 h-6"></i> 黃金週特別叮嚀
+                    </h2>
+                    <ul class="list-disc ml-5 space-y-2 text-sm text-blue-900 leading-relaxed">
+                        <li><b>安檢人潮：</b>5/3 回程當天成田機場人潮會非常擁擠，務必提前報到。</li>
+                        <li><b>數位交通卡：</b>Suica / Pasmo 請先加到 iPhone Wallet 並儲值好。</li>
+                        <li><b>Visit Japan Web：</b>截圖入境與海關 QR Code，減少在機場連 WiFi 的麻煩。</li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+
+        <footer class="text-center py-12 text-gray-400 text-xs font-light">
+            <p>© 2026 Tokyo Adventure Planner</p>
+            <p>專業旅遊嚮導 完美修復 HTML 版本</p>
+        </footer>
+    </div>
+
+    <script>
+        // 初始化 Lucide 圖標
+        lucide.createIcons();
+
+        // 密碼驗證邏輯
+        const TRIP_PASSWORD = "2026";
+
+        function checkPassword() {
+            const input = document.getElementById('trip-password').value;
+            const overlay = document.getElementById('password-overlay');
+            const mainContent = document.getElementById('main-content');
+            const errorMsg = document.getElementById('error-msg');
+
+            if (input === TRIP_PASSWORD) {
+                overlay.style.opacity = '0';
+                setTimeout(() => {
+                    overlay.style.display = 'none';
+                    mainContent.style.display = 'block';
+                    window.scrollTo(0, 0);
+                    // 重新渲染圖標
+                    lucide.createIcons();
+                }, 500);
+            } else {
+                errorMsg.classList.remove('hidden');
+                document.getElementById('trip-password').value = '';
+            }
+        }
+
+        // 標籤頁切換邏輯
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.getElementById(tabId).classList.add('active');
+
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('text-blue-600', 'border-b-2', 'border-blue-600');
+                btn.classList.add('text-gray-500');
+            });
+            const activeBtn = document.getElementById('btn-' + tabId);
+            activeBtn.classList.add('text-blue-600', 'border-b-2', 'border-blue-600');
+            activeBtn.classList.remove('text-gray-500');
+        }
+    </script>
+</body>
+</html>
