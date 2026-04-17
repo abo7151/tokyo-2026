@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Plane, MapPin, Sparkles, LogOut, Lock, Home, Zap, Utensils, Camera, Compass, Clock, Train, ShoppingBag, Microscope, ChevronRight, Info, AlertTriangle, Ticket } from 'lucide-react';
+import React, { useState } from 'react';
+import { Plane, MapPin, Sparkles, LogOut, Lock, Home, Zap, Utensils, Camera, Compass, Clock, Train, ShoppingBag, Microscope, ChevronRight, Info, AlertTriangle, Ticket, Landmark, TreePine } from 'lucide-react';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -20,7 +20,7 @@ const App = () => {
 
   if (!isAuthenticated) {
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-indigo-600 to-purple-700 p-4">
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-indigo-600 to-purple-700 p-4 font-sans">
         <div className="bg-white/95 backdrop-blur shadow-2xl rounded-3xl p-8 w-full max-w-sm text-center border border-white/20">
           <div className="mb-6 flex justify-center">
             <div className="p-4 bg-indigo-100 rounded-full text-indigo-600">
@@ -96,22 +96,22 @@ const App = () => {
             <div className="bg-white rounded-3xl shadow-md overflow-hidden border border-gray-100">
               <div className="bg-blue-600 text-white p-5 flex items-center justify-between">
                 <h2 className="text-xl font-bold flex items-center gap-2"><Plane className="w-6 h-6" /> Day 1 · 4/30 (四) 出發與抵達</h2>
-                <span className="text-xs bg-white/20 px-2 py-1 rounded-full uppercase tracking-widest font-bold">Departure</span>
+                <span className="text-xs bg-white/20 px-2 py-1 rounded-full uppercase tracking-widest font-bold font-sans">Departure</span>
               </div>
               <div className="p-6 space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="p-4 bg-blue-50 rounded-2xl border border-blue-100">
                     <div className="flex items-center gap-2 mb-1 text-blue-700 font-bold"><Clock className="w-4 h-4" /> 17:30 從家出發</div>
-                    <p className="text-sm text-gray-600">預留交通緩衝，確保 18:30 前抵達桃園機場 T1。</p>
+                    <p className="text-sm text-gray-600 italic">確保 18:30 前抵達桃機 T1 辦理 Check-in。</p>
                   </div>
                   <div className="p-4 bg-gray-50 rounded-2xl border border-gray-100">
                     <div className="flex items-center gap-2 mb-1 text-gray-700 font-bold"><Zap className="w-4 h-4" /> MM860 航班</div>
-                    <p className="text-sm text-gray-600">20:25 起飛 ➜ 00:40+1 抵達羽田 (HND)。</p>
+                    <p className="text-sm text-gray-600">20:25 起飛 ➜ 00:45+1 抵達羽田 (HND)。</p>
                   </div>
                 </div>
                 <div className="p-4 bg-indigo-50 rounded-2xl border border-indigo-200">
-                  <div className="flex items-center gap-2 mb-2 font-bold text-indigo-800"><Home className="w-5 h-5" /> 住宿：Villa Fontaine Grand 羽田機場</div>
-                  <p className="text-sm text-gray-700">與航廈 2 樓連結，步行即可抵達，凌晨入住極速補眠。</p>
+                  <div className="flex items-center gap-2 mb-2 font-bold text-indigo-800"><Home className="w-5 h-5" /> 住宿：Hotel Villa Fontaine Grand 羽田機場</div>
+                  <p className="text-sm text-gray-700">機場航廈直通，領完行李 10 分鐘內即可入住休息。</p>
                 </div>
               </div>
             </div>
@@ -124,30 +124,30 @@ const App = () => {
               <div className="p-6 space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="p-4 bg-gray-50 rounded-2xl border border-indigo-100">
-                    <div className="flex items-center gap-2 mb-2 text-indigo-700 font-bold"><MapPin className="w-5 h-5" /> 上午：上野 & 淺草</div>
-                    <p className="text-sm text-gray-600 mb-3">先去 TABI 上野寄放行李，再前往淺草寺參拜。午餐後直奔新宿。</p>
-                    <div className="bg-white p-2 rounded-lg text-xs border border-indigo-50 space-y-1">
-                      <p className="font-bold flex items-center gap-1 text-indigo-600"><Train className="w-3 h-3" /> 交通：</p>
-                      <p>● 上野 ➜ 淺草：地鐵銀座線 (5分鐘)</p>
-                      <p>● 淺草 ➜ 新宿：銀座線至赤坂見附轉丸之內線 (約30分鐘)</p>
+                    <div className="flex items-center gap-2 mb-2 text-indigo-700 font-bold"><Landmark className="w-5 h-5" /> 上午：上野 & 淺草</div>
+                    <p className="text-sm text-gray-600 mb-3">先去 TABI 上野寄放行李，隨後參訪淺草寺雷門。</p>
+                    <div className="bg-white p-2 rounded-lg text-xs border border-indigo-50 space-y-1 font-sans">
+                      <p className="font-bold flex items-center gap-1 text-indigo-600"><Train className="w-3 h-3" /> 交通建議：</p>
+                      <p>● 上野 ➜ 淺草：銀座線 (5分鐘)</p>
+                      <p>● 淺草 ➜ 新宿：銀座線至赤坂見附轉丸之內線</p>
                     </div>
                   </div>
                   <div className="p-4 bg-gray-50 rounded-2xl border border-indigo-100">
-                    <div className="flex items-center gap-2 mb-2 text-indigo-700 font-bold"><Compass className="w-5 h-5" /> 下午：新宿御苑散策</div>
-                    <p className="text-sm text-gray-600 mb-3">享受城市森林，推薦從「新宿門」入園。隨後步行至新宿三丁目商圈。</p>
+                    <div className="flex items-center gap-2 mb-2 text-indigo-700 font-bold"><TreePine className="w-5 h-5" /> 下午：新宿御苑散策</div>
+                    <p className="text-sm text-gray-600 mb-3">享受城市綠洲。隨後步行 8-10 分鐘可達新宿東口商圈。</p>
                   </div>
                 </div>
                 
                 <div className="p-5 bg-blue-50 rounded-2xl border border-blue-200">
                   <div className="flex items-center gap-2 mb-2 font-bold text-blue-800"><Zap className="w-5 h-5" /> 重點站：Alpen TOKYO (1F On Shop)</div>
-                  <p className="text-sm text-gray-700 leading-relaxed">體驗魔法取鞋牆與足分析。購物後步行 3 分鐘即達 Lumine Est 吃牛舌。</p>
+                  <p className="text-sm text-gray-700 leading-relaxed mb-3">體驗魔法取鞋牆。購物後步行即可抵達 Lumine Est 享用利久牛舌。</p>
                 </div>
 
                 <div className="p-4 bg-indigo-50 rounded-2xl flex items-start gap-4 border border-indigo-100">
                   <Utensils className="text-indigo-600 mt-1 w-5 h-5 shrink-0" />
                   <div>
                     <h3 className="font-bold text-indigo-800">晚餐：Lumine Est 利久牛舌</h3>
-                    <p className="text-sm text-gray-700 leading-relaxed">新宿站東口。回程搭乘地鐵銀座線或 JR 回上野休息。</p>
+                    <p className="text-sm text-gray-700 leading-relaxed italic">位於新宿站東口。回程搭乘地鐵銀座線或 JR 山手線回上野。</p>
                   </div>
                 </div>
               </div>
@@ -156,34 +156,30 @@ const App = () => {
             {/* Day 3: 5/2 */}
             <div className="bg-white rounded-3xl shadow-md overflow-hidden border border-gray-100">
               <div className="bg-purple-600 text-white p-5">
-                <h2 className="text-xl font-bold flex items-center gap-2"><Sparkles className="w-6 h-6" /> Day 3 · 5/02 (六) 藤花絕景與沉浸藝術</h2>
+                <h2 className="text-xl font-bold flex items-center gap-2"><Sparkles className="w-6 h-6" /> Day 3 · 5/02 (六) 藤花與藝術之旅</h2>
               </div>
               <div className="p-6 space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="p-4 bg-gray-50 rounded-2xl border border-purple-100">
+                  <div className="p-4 bg-gray-50 rounded-2xl border border-purple-100 font-sans">
                     <div className="flex items-center gap-2 mb-2 text-purple-700 font-bold"><Camera className="w-5 h-5" /> 上午：龜戶天神社</div>
-                    <p className="text-sm text-gray-600 mb-3">賞紫藤與晴空塔。黃金週人潮高峰，務必 08:30 前抵達。</p>
-                    <div className="bg-white p-2 rounded-lg text-xs border border-purple-50 space-y-1">
-                      <p className="font-bold flex items-center gap-1 text-purple-600"><Train className="w-3 h-3" /> 交通：</p>
-                      <p>● 上野 ➜ 秋葉原轉 JR 總武線 ➜ 龜戶 (約20分鐘)</p>
-                    </div>
+                    <p className="text-sm text-gray-600">賞紫藤與晴空塔。黃金週人潮高峰，務必 08:30 前抵達以確保拍照品質。</p>
                   </div>
-                  <div className="p-4 bg-gray-50 rounded-2xl border border-purple-100">
+                  <div className="p-4 bg-gray-50 rounded-2xl border border-purple-100 font-sans">
                     <div className="flex items-center gap-2 mb-2 text-purple-700 font-bold"><Compass className="w-5 h-5" /> 下午：麻布台 Hills</div>
-                    <p className="text-sm text-gray-600 mb-3">探索新地標。隨後步行 3 分鐘抵達 teamLab 會場。</p>
+                    <p className="text-sm text-gray-600">探索日本新地標與時尚咖啡廳。隨後步行至 teamLab 展區。</p>
                   </div>
                 </div>
                 
                 <div className="p-5 bg-purple-50 rounded-2xl border border-purple-200">
-                  <div className="flex items-center gap-2 mb-2 font-bold text-purple-800"><Zap className="w-5 h-5" /> 核心體驗：teamLab Borderless (15:00)</div>
-                  <p className="text-sm text-gray-700 mb-3">沉浸式光影藝術。看完展後搭乘日比谷線直達上野。</p>
+                  <div className="flex items-center gap-2 mb-2 font-bold text-purple-800"><Zap className="w-5 h-5" /> 核心行程：teamLab Borderless (15:00)</div>
+                  <p className="text-sm text-gray-700 mb-2">沉浸式光影藝術體驗。看完展後可搭乘日比谷線直達上野。</p>
                 </div>
 
                 <div className="p-4 bg-gray-50 rounded-2xl border border-gray-100 flex gap-4">
                   <ShoppingBag className="text-gray-400 shrink-0 mt-1" />
                   <div>
                     <h3 className="font-bold text-gray-800">晚上：上野阿美橫丁</h3>
-                    <p className="text-sm text-gray-500 italic">嚮導筆記：最後衝刺採買藥妝、零食，並享用熱鬧的下町居酒屋美食。</p>
+                    <p className="text-sm text-gray-500 italic font-sans">最後衝刺採買藥妝、零食。晚餐推薦在阿美橫丁體驗在地居酒屋文化。</p>
                   </div>
                 </div>
               </div>
@@ -195,33 +191,33 @@ const App = () => {
                 <h2 className="text-xl font-bold flex items-center gap-2"><LogOut className="w-6 h-6" /> Day 4 · 5/03 (日) 科博館與平安返家</h2>
               </div>
               <div className="p-6 space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="p-4 bg-gray-50 rounded-2xl border border-emerald-100 text-sm">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 font-sans text-sm">
+                  <div className="p-4 bg-gray-50 rounded-2xl border border-emerald-100">
                     <div className="flex items-center gap-2 mb-2 text-emerald-700 font-bold"><Microscope className="w-5 h-5" /> 上午：國立科學博物館</div>
-                    <p>上野公園內。看展後回 TABI 上野領取行李。</p>
+                    <p>上野公園內。推薦重點：地球館。看展後回 TABI 上野領取行李。</p>
                   </div>
-                  <div className="p-4 bg-gray-50 rounded-2xl border border-emerald-100 text-sm">
-                    <div className="flex items-center gap-2 mb-2 text-emerald-700 font-bold"><Ticket className="w-5 h-5" /> 下午：Skyliner 劃位與搭乘</div>
-                    <p>提早抵達京成上野站進行兌換劃位。5/3 黃金週車次較緊，務必確認回程位子。</p>
+                  <div className="p-4 bg-gray-50 rounded-2xl border border-emerald-100">
+                    <div className="flex items-center gap-2 mb-2 text-emerald-700 font-bold"><Ticket className="w-5 h-5" /> 下午：Skyliner 劃位返程</div>
+                    <p>前往京成上野站進行兌換。黃金週車次熱門，建議提早 15-20 分鐘抵達車站劃位。</p>
                   </div>
                 </div>
 
                 <div className="p-5 bg-emerald-50 rounded-2xl border border-emerald-200">
                   <div className="flex items-center gap-2 mb-4 font-bold text-emerald-800"><Train className="w-5 h-5" /> 交通：Skyliner 往成田 (NRT)</div>
-                  <div className="space-y-4">
+                  <div className="space-y-4 font-sans">
                     <div className="flex justify-between items-center bg-white p-4 rounded-xl border border-emerald-100">
                       <div>
-                        <p className="font-bold text-xs">京成上野 ➜ 成田機場 T2</p>
-                        <p className="text-xs text-blue-600 mt-1 font-medium italic">「魔法推薦班次」</p>
+                        <p className="font-bold text-xs uppercase tracking-wide">建議劃位班次</p>
+                        <p className="text-lg font-bold text-emerald-600 mt-1 italic">13:40 班次</p>
                       </div>
                       <div className="text-right">
-                        <p className="text-lg font-bold text-emerald-600">13:40 班次</p>
-                        <p className="text-xs text-gray-500">14:21 抵達機場</p>
+                        <p className="text-xs text-gray-500">抵達成田 T2：14:21</p>
+                        <p className="text-xs text-blue-600 font-bold mt-1">預留 2.5 小時 Check-in</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-4 text-sm font-bold border-t border-emerald-100 pt-4">
-                      <div className="text-gray-400 font-mono w-16 text-right">16:50</div>
-                      <div className="text-emerald-800">MM625 航班起飛 (提早 2.5 小時報到)</div>
+                      <div className="text-gray-400 font-mono w-24 text-right">16:50 🛫</div>
+                      <div className="text-emerald-800">MM625 航班起飛 ➜ 19:40 🛬 台北抵達</div>
                     </div>
                   </div>
                 </div>
@@ -231,20 +227,20 @@ const App = () => {
         )}
 
         {activeTab === 'budget' && (
-          <div className="bg-white p-8 rounded-3xl shadow-md border border-gray-100">
+          <div className="bg-white p-8 rounded-3xl shadow-md border border-gray-100 font-sans">
             <h2 className="text-2xl font-bold mb-8 text-blue-600 flex items-center gap-2"><ShoppingBag className="w-6 h-6" /> 預算明細</h2>
             <div className="space-y-4">
               <div className="flex justify-between border-b pb-3"><span>機票 (兩人總計)</span><span className="font-bold text-gray-700">$50,232 TWD</span></div>
-              <div className="flex justify-between border-b pb-3"><span>住宿 (Villa Fontaine)</span><span className="font-bold text-gray-700">$4,703 TWD</span></div>
+              <div className="flex justify-between border-b pb-3"><span>住宿 (Hotel Villa Fontaine)</span><span className="font-bold text-gray-700">$4,703 TWD</span></div>
               <div className="flex justify-between border-b pb-3"><span>住宿 (TABI 上野)</span><span class="font-bold text-gray-700">¥95,472 JPY</span></div>
               <div className="flex justify-between border-b pb-3"><span>teamLab 門票 (兩大)</span><span class="font-bold text-gray-700">¥11,500 JPY</span></div>
-              <div className="flex justify-between border-b pb-3 text-blue-700 font-bold"><span>Skyliner 票券 (含折扣)</span><span>$970 TWD</span></div>
+              <div className="flex justify-between border-b pb-3 text-blue-700 font-bold"><span>Skyliner 票券 (三人折後)</span><span>$970 TWD</span></div>
               <div className="flex justify-between border-b pb-3"><span>Sim 卡 (iVideo)</span><span class="font-bold text-gray-700">$586 TWD</span></div>
-              <div className="flex justify-between pt-4 text-lg">
+              <div className="flex justify-between pt-4 text-lg border-t-2 border-gray-100">
                 <span className="font-bold">總計預估 (未含餐費)</span>
                 <div className="text-right">
-                  <p className="text-blue-600 font-bold">$56,491 TWD</p>
-                  <p className="text-sm text-gray-400">+ ¥106,972 JPY</p>
+                  <p className="text-blue-600 font-bold tracking-tight">$56,491 TWD</p>
+                  <p className="text-sm text-gray-400 font-light">+ ¥106,972 JPY</p>
                 </div>
               </div>
             </div>
@@ -252,40 +248,40 @@ const App = () => {
         )}
 
         {activeTab === 'tips' && (
-          <div className="space-y-6">
+          <div className="space-y-6 font-sans">
             <div className="bg-indigo-50 p-6 rounded-3xl border border-indigo-200">
               <h2 className="text-xl font-bold mb-4 text-indigo-800 flex items-center gap-2"><Ticket className="w-6 h-6" /> Skyliner 兌換與劃位攻略</h2>
               <div className="space-y-4 text-sm text-gray-700 leading-relaxed">
                 <div className="bg-white p-4 rounded-xl border border-indigo-100">
-                  <p className="font-bold text-blue-700 mb-2">1. 兌換方式</p>
-                  <p>請持 Klook/KKday 的 QR Code 與護照，至「京成上野站」或「日暮里站」的 <b>自動售票機</b> 或 <b>服務櫃檯</b> 兌換實體票券並同時選位。</p>
+                  <p className="font-bold text-blue-700 mb-2">1. 兌換細節</p>
+                  <p>憑 Klook/KKday QR Code 與護照，可在京成上野站的售票機或櫃檯劃位。自動售票機介面有繁體中文，操作非常直覺。</p>
                 </div>
                 <div className="bg-white p-4 rounded-xl border border-indigo-100">
                   <p className="font-bold text-blue-700 mb-2">2. 時間規劃 (重要)</p>
-                  <p>由於 5/3 是黃金週，強烈建議 <b>Day 2 抵達上野時，就順便去京成上野站把 Day 4 的回程位子劃好</b>。這張憑證效期 180 天，隨時可以去劃位。</p>
+                  <p>5/3 是黃金週憲法紀念日。雖然 Skyliner 票券買好了，但**強烈建議在 Day 2 抵達上野後，就順便去車站把 Day 4 回程的位子劃好**，確保連假有位。</p>
                 </div>
                 <div className="bg-white p-4 rounded-xl border border-indigo-100">
-                  <p className="font-bold text-red-600 mb-2">3. 劃位班次</p>
-                  <p>推薦班次為 <b>13:40 (京成上野發)</b>，抵達機場後還有約 2.5 小時可以辦理登機與最後採購免稅品。</p>
+                  <p className="font-bold text-red-600 mb-2">3. 推薦劃位班次</p>
+                  <p>建議劃 <b>13:40 (發)</b>，大約 14:21 到成田二航。16:50 起飛的航班，建議最晚 14:30 抵達機場辦理登機，以應對黃金週安檢人潮。</p>
                 </div>
               </div>
             </div>
             
             <div className="bg-blue-50 p-6 rounded-3xl border border-blue-200">
               <h2 className="text-xl font-bold mb-4 text-blue-800 flex items-center gap-2"><AlertTriangle className="w-6 h-6" /> 黃金週特別叮嚀</h2>
-              <ul className="list-disc ml-5 space-y-2 text-sm text-blue-900">
-                <li>5/3 憲法紀念日是日本國定假日，機場安檢隊伍會很長，16:50 起飛建議 14:20 左右一定要到機場。</li>
-                <li>Visit Japan Web (VJW) 截圖備用。</li>
-                <li>Suica/Pasmo 數位交通卡預先儲值好。</li>
+              <ul className="list-disc ml-5 space-y-2 text-sm text-blue-900 leading-relaxed">
+                <li><b>安檢人潮：</b>5/3 回程當天成田機場人潮會非常擁擠，務必提前報到。</li>
+                <li><b>數位交通卡：</b>Suica / Pasmo 請先加到 iPhone Wallet 並儲值好。</li>
+                <li><b>Visit Japan Web：</b>截圖入境與海關 QR Code，減少在機場連 WiFi 的麻煩。</li>
               </ul>
             </div>
           </div>
         )}
       </main>
 
-      <footer className="text-center py-12 text-gray-400 text-xs">
+      <footer className="text-center py-12 text-gray-400 text-xs font-light">
           <p>© 2026 Tokyo Adventure Planner</p>
-          <p>專業旅遊嚮導 已更新 Skyliner 計畫</p>
+          <p>專業旅遊嚮導 已修正回程時間 (MM625: 16:50 ➜ 19:40)</p>
       </footer>
     </div>
   );
