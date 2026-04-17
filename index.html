@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026 東京之旅 | 專屬行程規劃</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
+        body { font-family: 'Noto Sans TC', sans-serif; scroll-behavior: smooth; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .glass-morphism {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        /* 密碼鎖層樣式 */
+        #password-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transition: opacity 0.5s ease;
+        }
+        #main-content {
+            display: none; /* 預設隱藏所有內容 */
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- 密碼鎖畫面 -->
+    <div id="password-overlay">
+        <div class="glass-morphism p-8 rounded-3xl shadow-2xl text-center max-w-sm w-full mx-4 border border-white/30 text-gray-800 bg-white/90">
+            <div class="mb-6 flex justify-center">
+                <div class="p-4 bg-indigo-100 rounded-full text-indigo-600">
+                    <i data-lucide="lock" class="w-10 h-10"></i>
+                </div>
+            </div>
+            <h1 class="text-2xl font-bold mb-2 text-gray-800">2026 東京之旅</h1>
+            <p class="text-sm text-gray-500 mb-6">請輸入通關密碼以檢視行程表</p>
+            <div class="space-y-4">
+                <input type="password" id="trip-password" placeholder="請輸入密碼" 
+                       class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-center text-lg tracking-widest">
+                <button onclick="checkPassword()" 
+                        class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold transition-all shadow-lg active:scale-95">
+                    進入行程表
+                </button>
+            </div>
+            <p id="error-msg" class="mt-4 text-red-500 text-sm hidden">密碼錯誤，請再試一次。</p>
+            <p class="mt-6 text-xs text-gray-400">提示：預設密碼為 2026</p>
+        </div>
+    </div>
+
+    <!-- 行程表主內容 (通過驗證後顯示) -->
+    <div id="main-content">
+        <!-- Hero Section -->
+        <header class="relative h-[40vh] flex items-center justify-center text-white overflow-hidden">
+            <div class="absolute inset-0 z-0">
+                <img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&q=80&w=2000" alt="東京景色" class="w-full h-full object-cover brightness-50">
+            </div>
+            <div class="relative z-10 text-center px-4">
+                <h1 class="text-4xl md:text-6xl font-bold mb-2 tracking-tight">2026 東京之旅</h1>
+                <p class="text-xl opacity-90 font-light">4/30 (Thu) - 5/03 (Sun) · 四天三夜專屬行程</p>
+            </div>
+        </header>
+
+        <!-- Main Navigation -->
+        <nav class="sticky top-0 z-50 glass-morphism shadow-sm">
+            <div class="max-w-4xl mx-auto flex justify-around p-4">
+                <button onclick="switchTab('itinerary')" class="tab-btn font-medium text-blue-600 border-b-2 border-blue-600 pb-1" id="btn-itinerary">行程詳情</button>
+                <button onclick="switchTab('budget')" class="tab-btn font-medium text-gray-500 hover:text-blue-600 pb-1" id="btn-budget">預算清單</button>
+                <button onclick="switchTab('tips')" class="tab-btn font-medium text-gray-500 hover:text-blue-600 pb-1" id="btn-tips">嚮導建議</button>
+            </div>
+        </nav>
+
+        <main class="max-w-4xl mx-auto p-4 md:p-8 pb-24">
+            <!-- 行程詳情分頁內容 (與先前一致) -->
+            <div id="itinerary" class="tab-content active space-y-10">
+                <!-- Day 1 -->
+                <div class="bg-white rounded-2xl shadow-md overflow-hidden border border-gray-100">
+                    <div class="bg-blue-600 text-white p-4 flex items-center gap-2">
+                        <i data-lucide="plane"></i> <h2 class="text-xl font-bold">Day 1 · 4/30 (四)</h2>
+                    </div>
+                    <div class="p-6 space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="border rounded-xl p-4 bg-blue-50 border-blue-100">
+                                <h3 class="font-bold text-blue-700">17:30 從家裡出發</h3>
+                                <p class="text-sm text-gray-600 italic">預計 18:30 抵達桃機</p>
+                            </div>
+                            <div class="border rounded-xl p-4 bg-gray-50 border-gray-100">
+                                <h3 class="font-bold">20:25 MM860 起飛</h3>
+                                <p class="text-sm text-gray-600">辦理登機與免稅購物。</p>
+                            </div>
+                        </div>
+                        <div class="border rounded-xl p-4 bg-indigo-50 border-indigo-200">
+                            <h3 class="font-bold text-indigo-800">住宿：Villa Fontaine Grand 羽田機場</h3>
+                            <p class="text-sm text-gray-700">00:40+1 抵達，機場直通不需交通接駁。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Day 2 -->
+                <div class="bg-white rounded-2xl shadow-md overflow-hidden border border-gray-100">
+                    <div class="bg-indigo-600 text-white p-4 flex items-center gap-2">
+                        <i data-lucide="map-pin"></i> <h2 class="text-xl font-bold">Day 2 · 5/01 (五)</h2>
+                    </div>
+                    <div class="p-6 space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="border rounded-xl p-4 bg-gray-50 border-indigo-100">
+                                <h3 class="font-bold text-indigo-700">上午：上野 & 淺草</h3>
+                                <p class="text-sm text-gray-600">寄放行李後參拜淺草寺。</p>
+                            </div>
+                            <div class="border rounded-xl p-4 bg-gray-50 border-indigo-100">
+                                <h3 class="font-bold text-indigo-700">下午：新宿御苑賞綠意</h3>
+                                <p class="text-sm text-gray-600">廣大草皮散策與放空。</p>
+                            </div>
+                        </div>
+                        <div class="border rounded-xl p-4 bg-blue-50 border-blue-200">
+                            <h3 class="font-bold text-blue-800">重點：Alpen TOKYO (On Shop)</h3>
+                            <p class="text-sm text-gray-700">體驗魔法取鞋牆，採買專業跑鞋。</p>
+                        </div>
+                        <div class="border rounded-xl p-4 bg-indigo-50 flex items-start gap-4 border-indigo-100">
+                            <i data-lucide="utensils" class="text-indigo-600 mt-1"></i>
+                            <div>
+                                <h3 class="font-bold text-indigo-800">晚餐：Lumine Est 利久牛舌</h3>
+                                <p class="text-sm text-gray-700">厚切牛舌極品套餐。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Day 3 -->
+                <div class="bg-white rounded-2xl shadow-md overflow-hidden border border-gray-100">
+                    <div class="bg-purple-600 text-white p-4 flex items-center gap-2">
+                        <i data-lucide="sparkles"></i> <h2 class="text-xl font-bold">Day 3 · 5/02 (六)</h2>
+                    </div>
+                    <div class="p-6 space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="border rounded-xl p-4 bg-gray-50 border-purple-100">
+                                <h3 class="font-bold text-purple-700">上午：龜戶天神社</h3>
+                                <p class="text-sm text-gray-600">賞紫藤與晴空塔同框。</p>
+                            </div>
+                            <div class="border rounded-xl p-4 bg-gray-50 border-purple-100">
+                                <h3 class="font-bold text-purple-700">下午：麻布台 Hills</h3>
+                                <p class="text-sm text-gray-600">探索日本新地標與時尚咖啡。</p>
+                            </div>
+                        </div>
+                        <div class="border rounded-xl p-4 bg-purple-50 border-purple-200">
+                            <h3 class="font-bold text-purple-800">預約：teamLab Borderless (15:00)</h3>
+                            <p class="text-sm text-gray-700 italic">白色衣服投影效果最美！</p>
+                        </div>
+                        <div class="border rounded-xl p-4 bg-indigo-50 border-indigo-100">
+                            <h3 class="font-bold text-indigo-800">晚上：上野阿美橫丁</h3>
+                            <p class="text-sm text-gray-700">下町氣息、居酒屋、藥妝採買。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Day 4 -->
+                <div class="bg-white rounded-2xl shadow-md overflow-hidden border border-gray-100">
+                    <div class="bg-emerald-600 text-white p-4 flex items-center gap-2">
+                        <i data-lucide="log-out"></i> <h2 class="text-xl font-bold">Day 4 · 5/03 (日)</h2>
+                    </div>
+                    <div class="p-6 space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="border rounded-xl p-4 bg-gray-50 border-emerald-100">
+                                <h3 class="font-bold text-emerald-700">上午：國立科學博物館</h3>
+                                <p class="text-sm text-gray-600">工程師老爸最愛，地球館科技史。</p>
+                            </div>
+                            <div class="border rounded-xl p-4 bg-gray-50 border-emerald-100">
+                                <h3 class="font-bold text-emerald-700">下午：伴手禮 & 交通</h3>
+                                <p class="text-sm text-gray-600">上野站取行李，搭乘 Skyliner 前往機場。</p>
+                            </div>
+                        </div>
+                        <div class="border rounded-xl p-4 bg-emerald-50 border-emerald-200">
+                            <h3 class="font-bold text-emerald-800">19:40 MM625 起飛返台</h3>
+                            <p class="text-sm text-gray-500">建議 15:30 前搭車往機場。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Budget Tab -->
+            <div id="budget" class="tab-content space-y-6">
+                <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-100">
+                    <h2 class="text-2xl font-bold mb-6 text-blue-600">預算概覽</h2>
+                    <div class="space-y-4">
+                        <div class="flex justify-between border-b pb-2"><span>機票 (兩人)</span><span class="font-bold text-gray-700">$50,232 TWD</span></div>
+                        <div class="flex justify-between border-b pb-2"><span>住宿 (Villa Fontaine)</span><span class="font-bold text-gray-700">$4,703 TWD</span></div>
+                        <div class="flex justify-between border-b pb-2"><span>住宿 (TABI 上野)</span><span class="font-bold text-gray-700">¥95,472 JPY</span></div>
+                        <div class="flex justify-between border-b pb-2"><span>teamLab 門票</span><span class="font-bold text-gray-700">¥11,500 JPY</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tips Tab -->
+            <div id="tips" class="tab-content space-y-6">
+                <div class="bg-yellow-50 p-6 rounded-2xl border border-yellow-200">
+                    <h2 class="text-2xl font-bold mb-4 text-yellow-700">行前溫馨提醒</h2>
+                    <ul class="list-disc ml-5 space-y-2 text-sm text-gray-700">
+                        <li><b>黃金週生存：</b>5/1-5/3 是日本連假，請隨時準備 B 方案餐廳。</li>
+                        <li><b>交通卡：</b>建議手機先綁定 Suica 或 Pasmo 方便感應。</li>
+                        <li><b>護照正本：</b>Alpen TOKYO 退稅必備。</li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+
+        <footer class="text-center py-12 text-gray-400 text-sm">
+            <p>© 2026 Tokyo Adventure Planner</p>
+        </footer>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        // 設定您的密碼
+        const TRIP_PASSWORD = "2026"; // 您可以在這裡更改密碼
+
+        function checkPassword() {
+            const input = document.getElementById('trip-password').value;
+            const overlay = document.getElementById('password-overlay');
+            const mainContent = document.getElementById('main-content');
+            const errorMsg = document.getElementById('error-msg');
+
+            if (input === TRIP_PASSWORD) {
+                overlay.style.opacity = '0';
+                setTimeout(() => {
+                    overlay.style.display = 'none';
+                    mainContent.style.display = 'block';
+                    window.scrollTo(0, 0);
+                }, 500);
+            } else {
+                errorMsg.classList.remove('hidden');
+                document.getElementById('trip-password').value = '';
+            }
+        }
+
+        // 支援 Enter 鍵輸入
+        document.getElementById('trip-password').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('text-blue-600', 'border-b-2', 'border-blue-600');
+                btn.classList.add('text-gray-500');
+            });
+            document.getElementById('btn-' + tabId).classList.add('text-blue-600', 'border-b-2', 'border-blue-600');
+            document.getElementById('btn-' + tabId).classList.remove('text-gray-500');
+        }
+    </script>
+</body>
+</html>
