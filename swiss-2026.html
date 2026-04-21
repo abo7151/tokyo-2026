@@ -67,7 +67,6 @@
             backdrop-filter: blur(8px);
         }
         
-        /* 班次表專用樣式 */
         .schedule-box {
             background-color: #F8FAFC;
             border-left: 4px solid #0284C7;
@@ -104,7 +103,7 @@
                     <i class="fa-solid fa-lock"></i>
                 </div>
                 <h2 class="text-2xl font-bold text-stone-800 mb-2 tracking-tight">專屬行程表</h2>
-                <p class="text-sm text-stone-500 mb-8">請輸入密碼以檢視最新交通優化版規劃</p>
+                <p class="text-sm text-stone-500 mb-8">請輸入密碼以檢視最新 Jungfrau Lodge 訂製版</p>
                 <div class="space-y-4">
                     <div class="relative">
                         <input type="password" id="pass-input" placeholder="2026" class="w-full px-5 py-4 rounded-xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent text-center text-lg tracking-widest bg-stone-50 transition-all" onkeypress="if(event.key === 'Enter') checkPassword()">
@@ -126,11 +125,9 @@
                     <i class="fa-solid fa-mountain-sun mr-2"></i> 義瑞盛夏自然之旅
                 </div>
                 <div class="hidden md:flex space-x-8 text-sm font-medium text-stone-600">
-                    <a href="#map-section" class="hover:text-sky-700">地理路線</a>
-                    <a href="#overview" class="hover:text-sky-700">海拔氣溫</a>
                     <a href="#itinerary" class="hover:text-sky-700">完整行程表</a>
                     <a href="#weather-strategy" class="hover:text-sky-700">天氣決策</a>
-                    <a href="#logistics" class="hover:text-sky-700">交通指南</a>
+                    <a href="#logistics" class="hover:text-sky-700">交通住宿指南</a>
                 </div>
             </div>
         </div>
@@ -147,8 +144,8 @@
                 <div class="bg-white px-4 py-2 rounded-full border border-stone-200 shadow-sm text-sm font-medium text-stone-600">
                     <i class="fa-solid fa-people-group mr-1"></i> 兩大一小 (10歲)
                 </div>
-                <div class="bg-sky-50 text-sky-700 px-4 py-2 rounded-full border border-sky-200 shadow-sm text-sm font-bold">
-                    <i class="fa-solid fa-train-tram mr-1"></i> 順暢轉車無縫銜接
+                <div class="bg-emerald-50 text-emerald-700 px-4 py-2 rounded-full border border-emerald-200 shadow-sm text-sm font-bold">
+                    <i class="fa-solid fa-check-circle mr-1"></i> 已鎖定保底住宿
                 </div>
             </div>
         </header>
@@ -157,7 +154,6 @@
         <section id="map-section" class="bg-white rounded-2xl shadow-sm border border-stone-100 p-6 md:p-8">
             <div class="mb-6">
                 <h2 class="text-2xl font-bold text-stone-800 mb-2"><i class="fa-solid fa-map-location-dot text-emerald-600 mr-2"></i>瑞士地理總覽</h2>
-                <p class="text-stone-500 text-sm leading-relaxed">藍色標記為住宿基地，橘色為重點景點。您可以自由縮放查看地形。</p>
             </div>
             <div class="map-wrapper shadow-sm border border-stone-200">
                 <div id="routeMap" class="w-full h-full z-10"></div>
@@ -177,8 +173,7 @@
         <!-- Section 2: Full Expanded Itinerary -->
         <section id="itinerary" class="space-y-12">
             <div class="mb-4">
-                <h2 class="text-2xl font-bold text-stone-800 mb-2"><i class="fa-solid fa-calendar-days text-sky-600 mr-2"></i>11 天深度行程 (含實戰班次)</h2>
-                <p class="text-stone-500 text-sm leading-relaxed">各移動日已加入瑞士國鐵 (SBB) 最順暢的推薦班次與轉乘緩衝時間，請務必提早預訂跨國對號座。</p>
+                <h2 class="text-2xl font-bold text-stone-800 mb-2"><i class="fa-solid fa-calendar-days text-sky-600 mr-2"></i>11 天深度行程 (Jungfrau Lodge 版)</h2>
             </div>
             <div id="itinerary-content" class="space-y-16">
                 <!-- Content injected via JS -->
@@ -212,13 +207,7 @@
                             <td class="px-4 py-4 font-bold bg-stone-50/50">格林德瓦</td>
                             <td class="px-4 py-4">攻頂少女峰 / First 健行</td>
                             <td class="px-4 py-4">穆倫小鎮 / 懸崖天空步道</td>
-                            <td class="px-4 py-4">Coop 買牛排 / 瀑布鎮探險</td>
-                        </tr>
-                        <tr>
-                            <td class="px-4 py-4 font-bold bg-stone-50/50">琉森</td>
-                            <td class="px-4 py-4">皮拉圖斯山 (全景)</td>
-                            <td class="px-4 py-4">琉森湖蒸汽船遊湖</td>
-                            <td class="px-4 py-4">老城區巧克力店巡禮</td>
+                            <td class="px-4 py-4">Coop 買烤雞 / 瀑布鎮探險</td>
                         </tr>
                     </tbody>
                 </table>
@@ -228,11 +217,10 @@
         <!-- Section 3: Logistics -->
         <section id="logistics" class="mb-16 grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div class="bg-white rounded-2xl shadow-sm border border-stone-100 p-6">
-                <h3 class="text-lg font-bold text-stone-800 mb-4 flex items-center"><i class="fa-solid fa-plane-up text-sky-600 mr-2"></i>國泰航空航班 (連假首選)</h3>
-                <div class="text-xs space-y-2 text-stone-600">
-                    <p>8/7 CX479 (21:05 TPE) → CX233 (00:50 HKG)</p>
-                    <p class="font-bold text-sky-800 underline">8/8 08:00 抵達米蘭 (MXP)</p>
-                    <p>8/18 CX382 (13:30 ZRH) 啟程回國</p>
+                <h3 class="text-lg font-bold text-stone-800 mb-4 flex items-center"><i class="fa-solid fa-hotel text-sky-600 mr-2"></i>Jungfrau Lodge 實戰策略</h3>
+                <div class="text-sm space-y-3 text-stone-600">
+                    <p><strong><i class="fa-solid fa-suitcase mr-1"></i> 行李收納：</strong>房間為 22 平方公尺，走道較窄。建議入住時將衣物拿出掛入衣櫥，大行李箱合起直立靠牆，以保留走動空間。</p>
+                    <p><strong><i class="fa-solid fa-utensils mr-1"></i> 無廚房救星：</strong>飯店有含早餐。晚餐可步行至主車站旁的 Coop 大型超市，採買烤半雞、沙拉盒。務必確認房內有快煮壺，可搭配熱湯或泡麵。</p>
                 </div>
             </div>
             <div class="bg-white rounded-2xl shadow-sm border border-stone-100 p-6">
@@ -307,17 +295,17 @@
         }
 
         // ==========================================
-        // 📅 行程資料 (Added Specific Transport Schedules)
+        // 📅 行程資料 (Updated for Jungfrau Lodge)
         // ==========================================
         const itineraryData = {
             station1: {
                 title: "第一站：策馬特．名峰之巔 (Zermatt)",
-                hotel: "推薦：Haus Matten (大空間) 或 Haus Viktoria A (車站正前方)",
+                hotel: "推薦預訂：Haus Matten 或 Haus Viktoria A (有洗衣機為佳)",
                 days: [
                     {
                         date: "8/08 (六) Day 1",
                         route: "抵達米蘭 ➔ 跨越邊境 ➔ 策馬特 (長途移動日)",
-                        content: `<strong class='text-sky-800'>【交通策略】</strong> 考量通關與拿行李，我們安排在米蘭中央車站有 1 小時 15 分鐘的緩衝，讓您能從容買午餐，避免帶小孩狂奔趕車。
+                        content: `<strong class='text-sky-800'>【交通策略】</strong> 在米蘭中央車站保留 1 小時 15 分鐘的緩衝買午餐。
                         <div class="schedule-box shadow-sm">
                             <div class="schedule-row"><span class="schedule-time">11:13</span> <span class="schedule-station">米蘭機場 MXP</span> <span class="schedule-train">Malpensa Express</span></div>
                             <div class="schedule-row"><span class="schedule-time">12:05</span> <span class="schedule-station">米蘭中央車站 (抵達)</span></div>
@@ -336,7 +324,7 @@
                     {
                         date: "8/09 (日) Day 2",
                         route: "策馬特小鎮 (海拔適應回血日)",
-                        content: "<strong class='text-sky-800'>【全天】</strong> 睡到自然醒。這是您的『關鍵體力恢復日』。帶孩子在小鎮逛逛、看馬特洪峰博物館。這天絕對不上山，讓身體完全適應 1600m 的海拔，將後續登山的風險降至最低。",
+                        content: "<strong class='text-sky-800'>【全天】</strong> 睡到自然醒。帶孩子在小鎮逛逛、看馬特洪峰博物館。這天絕對不上山，讓身體完全適應 1600m 的海拔。",
                         transport: "步行",
                         temp: "預估 22°C", duration: "完全彈性", departure: "睡到自然醒",
                         photoTip: "在小鎮橋上迎接馬特洪峰的初次露臉",
@@ -346,7 +334,7 @@
                     {
                         date: "8/10 (一) Day 3",
                         route: "高納葛拉特 (Gornergrat) 倒影攝影日",
-                        content: "<strong class='text-sky-800'>【上午】</strong> <strong class='text-red-600'>決策點：</strong> 出門前看 Gornergrat Webcam。若無雲無風，直衝 Riffelsee 拍倒影；若雲厚則改為單純上山觀景。下午提早下山回鎮上，避免連續疲勞。",
+                        content: "<strong class='text-sky-800'>【上午】</strong> <strong class='text-red-600'>出門前看 Webcam。</strong>若無雲無風，直衝 Riffelsee 拍倒影；若雲厚則改為單純上山觀景。下午提早下山回鎮上，避免連續疲勞。",
                         transport: "GGB 齒軌火車",
                         temp: "峰頂 5°C", duration: "單程 35 分鐘", departure: "07:00 (衝景必選)",
                         photoTip: "Riffelsee 湖畔是 iPhone 廣角與倒影的黃金位置",
@@ -356,7 +344,7 @@
                     {
                         date: "8/11 (二) Day 4",
                         route: "冰川天堂與萊湖 (彈性撤退日)",
-                        content: "<strong class='text-sky-800'>【上午】</strong> 若能見度差，建議直接取消冰川天堂行程，將體力留在下午的 Leisee 萊湖放電。3883m 海拔極高，若孩子感到頭痛不適，應立即撤退回鎮上。",
+                        content: "<strong class='text-sky-800'>【上午】</strong> 若能見度差，建議直接取消冰川天堂行程，改至 Leisee 萊湖放電。3883m 海拔極高，若孩子感到頭痛不適，應立即撤退。",
                         transport: "大型高山纜車",
                         temp: "峰頂 -2°C", duration: "單程 45 分鐘", departure: "08:30 前",
                         photoTip: "電影模式拍攝小孩在萊湖玩水上木筏",
@@ -367,32 +355,23 @@
             },
             station2: {
                 title: "第二站：少女峰區．巔峰冒險 (Grindelwald)",
-                hotel: "選址原則：首選 Terminal 站旁 (直上 Eiger Express)",
+                hotel: "已鎖定：Jungfrau Lodge (附早餐) | 離主車站 3 分鐘",
                 days: [
                     {
                         date: "8/12 (三) Day 5",
                         route: "策馬特 ➔ 格林德瓦 (悠閒轉場移動日)",
-                        content: `<strong class='text-sky-800'>【上午】</strong> 睡飽退房。瑞士的轉車時間雖短但動線極佳，請放心跟著人群走。
-                        <div class="schedule-box shadow-sm">
-                            <div class="schedule-row"><span class="schedule-time">10:37</span> <span class="schedule-station">策馬特 Zermatt</span> <span class="schedule-train">MGB 列車</span></div>
-                            <div class="schedule-row"><span class="schedule-time">11:46</span> <span class="schedule-station">Visp (轉乘)</span> <span class="schedule-train">IC 城際列車</span></div>
-                            <div class="schedule-transfer"><i class="fa-solid fa-person-walking-luggage"></i> 轉乘 11 分鐘 (有電梯/斜坡)</div>
-                            <div class="schedule-row"><span class="schedule-time">11:57</span> <span class="schedule-station">Visp 出發</span></div>
-                            <div class="schedule-row"><span class="schedule-time">12:23</span> <span class="schedule-station">Spiez (轉乘)</span> <span class="schedule-train">ICE/IC 列車</span></div>
-                            <div class="schedule-row"><span class="schedule-time">12:58</span> <span class="schedule-station">因特拉肯 Interlaken Ost (轉乘)</span> <span class="schedule-train">BOB 登山火車</span></div>
-                            <div class="schedule-row"><span class="schedule-time">13:34</span> <span class="schedule-station">抵達 格林德瓦 Grindelwald</span></div>
-                        </div>
-                        <p class="text-sm mt-2">抵達後逛 Coop 超市採買食材，為隔天挑戰少女峰區儲備體力。</p>`,
+                        content: `<strong class='text-sky-800'>【上午】</strong> 睡飽退房。搭乘 10:37 班車離開策馬特，約 13:34 抵達格林德瓦 (Grindelwald Bahnhof)。
+                        <br><br><strong class='text-sky-800'>【下午】</strong> 步行 3 分鐘入住 <strong>Jungfrau Lodge</strong>。因房間 (22平米) 空間有限，建議將這幾天的衣物拿出放進衣櫥，大行李直立靠牆。傍晚步行至主車站旁的 Coop 超市採買烤雞、沙拉等熟食回陽台享用。`,
                         transport: "IC 城際列車 + BOB 鐵路",
                         temp: "預估 22°C", duration: "約 3 小時", departure: "10:37 班次",
                         photoTip: "火車行經 Spiez 後可捕捉圖恩湖翠綠水色",
-                        food: "超市買牛排與起司，享受艾格峰下的陽台晚餐",
+                        food: "Coop 超市必買：現烤半雞與各式熱食",
                         highlight: "零摩擦力的移動體驗，為攻頂儲備能量"
                     },
                     {
                         date: "8/13 (四) Day 6",
                         route: "菲斯特 (First) 冒險輕健行",
-                        content: "<strong class='text-sky-800'>【全天】</strong> 造訪 First 山頂。進行 Bachalpsee 湖泊健行。這是一個有趣但不會太累的行程，下午體驗卡丁車 (Mountain Cart) 或滑板車下山。",
+                        content: "<strong class='text-sky-800'>【全天】</strong> 在飯店享用完早餐後，前往 First 山頂進行 Bachalpsee 湖泊健行。下午體驗卡丁車 (Mountain Cart) 溜下山。",
                         transport: "First 景觀纜車",
                         temp: "山腰 12°C", duration: "單程 25 分鐘", departure: "08:30 前搶卡丁車",
                         photoTip: "卡丁車下山時使用 0.5x 廣角拍攝臨場感",
@@ -402,9 +381,15 @@
                     {
                         date: "8/14 (五) Day 7",
                         route: "歐洲之巔：少女峰 (主攻決策日)",
-                        content: "<strong class='text-sky-800'>【全天】</strong> <strong class='text-red-600 font-bold underline'>決策原則：</strong> 早上 7 點看 Jungfraujoch Webcam。若山頂雲層高度過低或白牆一片，『絕對不要上去』，直接將此日與 Day 8 對調。天氣晴朗才搭乘 Eiger Express 攻頂。",
-                        transport: "Eiger Express + 齒軌火車",
-                        temp: "峰頂 -1°C", duration: "單程 45 分鐘", departure: "08:15",
+                        content: `<strong class='text-sky-800'>【全天】</strong> <strong class='text-red-600 font-bold'>決策原則：</strong> 早上 7 點看 Jungfraujoch Webcam。天氣晴朗才攻頂。
+                        <div class="schedule-box shadow-sm border-l-emerald-500">
+                            <div class="schedule-row"><span class="schedule-time">08:18</span> <span class="schedule-station">從飯店走 3 分鐘到 Grindelwald 主車站</span></div>
+                            <div class="schedule-row"><span class="schedule-time">08:21</span> <span class="schedule-station">火車抵達 Terminal (僅搭 1 站, 3分鐘)</span></div>
+                            <div class="schedule-transfer"><i class="fa-solid fa-cable-car"></i> 室內無縫轉乘 Eiger Express 纜車直上冰川</div>
+                        </div>
+                        <p class="text-sm mt-2">若雲層太厚，絕對不要上去，直接將此日與 Day 8 對調。</p>`,
+                        transport: "火車接駁 + Eiger Express + 齒軌火車",
+                        temp: "峰頂 -1°C", duration: "單程約 50 分鐘", departure: "08:10 離開飯店",
                         photoTip: "站在阿萊奇冰川背景前拍家族紀錄照",
                         food: "頂上的 Lindt 巧克力店最後採買",
                         highlight: "直達 3454m 歐洲海拔最高火車站"
@@ -414,7 +399,7 @@
                         route: "保險機制日：穆倫 或 少女峰補考",
                         content: "<strong class='text-sky-800'>【情境 A】</strong>：若 Day 7 已成功攻頂，今天造訪懸崖小鎮穆倫 (Mürren) 或搭船遊布里恩茨湖。<br><br><strong class='text-orange-700'>【情境 B】</strong>：若 Day 7 天氣差，今天啟動備援計畫攻頂。這天是旅程的保險，確保您不留遺憾。",
                         transport: "纜車 / 蒸汽船",
-                        temp: "預估 20°C", duration: "完全彈性", departure: "完全彈性",
+                        temp: "預估 20°C", duration: "完全彈性", departure: "享用飯店早餐後出發",
                         photoTip: "穆倫小鎮能拍出極致的阿爾卑斯深谷感",
                         food: "懸崖咖啡廳必點經典黑森林蛋糕",
                         highlight: "100% 提升少女峰成功率的彈性安排"
@@ -428,16 +413,9 @@
                     {
                         date: "8/16 (日) Day 9",
                         route: "黃金快線 ➔ 琉森 (放鬆模式開啟)",
-                        content: `<strong class='text-sky-800'>【交通策略】</strong> 黃金快線 (Luzern-Interlaken Express) 是這趟最美的火車之一。
-                        <div class="schedule-box shadow-sm">
-                            <div class="schedule-row"><span class="schedule-time">10:18</span> <span class="schedule-station">格林德瓦 Grindelwald</span> <span class="schedule-train">BOB 列車</span></div>
-                            <div class="schedule-row"><span class="schedule-time">10:53</span> <span class="schedule-station">因特拉肯 Interlaken Ost (轉乘)</span> <span class="schedule-train">黃金快線</span></div>
-                            <div class="schedule-row"><span class="schedule-time">11:04</span> <span class="schedule-station">因特拉肯 出發</span></div>
-                            <div class="schedule-row"><span class="schedule-time">12:55</span> <span class="schedule-station">抵達 琉森 Luzern</span></div>
-                        </div>
-                        <p class="text-sm mt-2">抵達琉森後進入『節能模式』。帶著小孩在琉森湖畔餵天鵝、逛古城，不要排任何體力行程。</p>`,
+                        content: `<strong class='text-sky-800'>【下午】</strong> 搭乘黃金快線 (Luzern-Interlaken Express)。抵達琉森後進入『節能模式』。帶著小孩在琉森湖畔餵天鵝、逛古城，不要排任何體力行程。`,
                         transport: "Luzern-Interlaken Express",
-                        temp: "預估 25°C", duration: "約 2.5 小時", departure: "10:18 班次",
+                        temp: "預估 25°C", duration: "約 2.5 小時", departure: "10:18 (格林德瓦發車)",
                         photoTip: "列車右側窗外的湖景是縮時攝影首選",
                         food: "當地名菜：蘑菇小牛肉派 (Chügelipastete)",
                         highlight: "優雅進入城市節奏，享受湖光山色"
@@ -455,12 +433,7 @@
                     {
                         date: "8/18 (二) Day 11",
                         route: "琉森 ➔ 蘇黎世機場 ➔ 賦歸",
-                        content: `<strong class='text-sky-800'>【完美收尾】</strong> 為了銜接 13:30 的國泰航班，我們安排了一班最穩健的直達車。
-                        <div class="schedule-box shadow-sm border-l-emerald-500">
-                            <div class="schedule-row"><span class="schedule-time">09:35</span> <span class="schedule-station">琉森 Luzern</span> <span class="schedule-train">IR 70 直達快車</span></div>
-                            <div class="schedule-row"><span class="schedule-time">10:44</span> <span class="schedule-station">抵達 蘇黎世機場 (Zürich Flughafen)</span></div>
-                        </div>
-                        <p class="text-sm mt-2">抵達後有充裕近 3 小時辦理退稅、掛行李。機場商店區非常大，可做最後一輪伴手禮掃貨。</p>`,
+                        content: `<strong class='text-sky-800'>【完美收尾】</strong> 搭乘 09:35 直達快車 (IR 70)，10:44 直達蘇黎世機場航廈下方。保留近 3 小時餘裕辦理退稅、掛行李與採購，銜接 13:30 國泰航班。`,
                         transport: "SBB 直達快車 (IR 70)",
                         temp: "預估 26°C", duration: "約 1.1 小時", departure: "09:35 班次",
                         photoTip: "整理照片，把最滿意的相片發佈動態",
