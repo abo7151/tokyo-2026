@@ -4,89 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2026 義瑞盛夏自然之旅：11天深度精華規劃</title>
-    
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
-    <!-- Leaflet.js -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
-    
-    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <style>
-        body {
-            font-family: 'Noto Sans TC', sans-serif;
-            background-color: #FAFAF9;
-            color: #292524;
-            overflow: hidden; 
-        }
-        
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 900px; 
-            margin-left: auto;
-            margin-right: auto;
-            height: 45vh; 
-            min-height: 350px;
-            max-height: 500px;
-        }
-
-        .map-wrapper {
-            position: relative;
-            width: 100%;
-            height: 55vh; 
-            min-height: 450px;
-            border-radius: 1rem;
-            overflow: hidden;
-            z-index: 10;
-            background-color: #F5F5F4; 
-        }
-
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #f1f1f1; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-
-        .fade-in { animation: fadeIn 0.4s ease-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        
-        .station-header {
-            position: sticky;
-            top: 64px; 
-            z-index: 40;
-            background-color: rgba(250, 250, 249, 0.95);
-            backdrop-filter: blur(8px);
-        }
-        
-        .schedule-box {
-            background-color: #F8FAFC;
-            border-left: 4px solid #0284C7;
-            padding: 10px 14px;
-            border-radius: 0 0.5rem 0.5rem 0;
-            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-            font-size: 0.85rem;
-            color: #334155;
-            margin-top: 12px;
-            margin-bottom: 12px;
-        }
-        .schedule-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 4px;
-            align-items: center;
-        }
-        .schedule-row:last-child { margin-bottom: 0; }
-        .schedule-time { font-weight: 700; color: #0F172A; width: 45px; }
-        .schedule-station { flex-grow: 1; margin-left: 12px; font-weight: 500; }
+        body { font-family: 'Noto Sans TC', sans-serif; background-color: #FAFAF9; color: #292524; overflow: hidden; }
+        .chart-container { position: relative; width: 100%; max-width: 900px; margin: 0 auto; height: 45vh; min-height: 350px; max-height: 500px; }
+        .map-wrapper { position: relative; width: 100%; height: 55vh; min-height: 450px; border-radius: 1rem; overflow: hidden; z-index: 10; background-color: #F5F5F4; }
+        ::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: #f1f1f1; } ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; } ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        .fade-in { animation: fadeIn 0.4s ease-out; } @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .station-header { position: sticky; top: 64px; z-index: 40; background-color: rgba(250, 250, 249, 0.95); backdrop-filter: blur(8px); }
+        .schedule-box { background-color: #F8FAFC; border-left: 4px solid #0284C7; padding: 10px 14px; border-radius: 0 0.5rem 0.5rem 0; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 0.85rem; color: #334155; margin-top: 12px; margin-bottom: 12px; }
+        .schedule-row { display: flex; justify-content: space-between; margin-bottom: 4px; align-items: center; } .schedule-row:last-child { margin-bottom: 0; }
+        .schedule-time { font-weight: 700; color: #0F172A; width: 45px; } .schedule-station { flex-grow: 1; margin-left: 12px; font-weight: 500; }
         .schedule-train { color: #0284C7; font-size: 0.75rem; background: #E0F2FE; padding: 2px 6px; border-radius: 4px; font-weight: bold; }
         .schedule-transfer { color: #EA580C; font-size: 0.75rem; display: flex; align-items: center; gap: 4px; padding: 2px 0;}
     </style>
@@ -99,19 +32,13 @@
             <div class="absolute -top-12 -right-12 w-32 h-32 bg-sky-100 rounded-full opacity-50"></div>
             <div class="absolute -bottom-10 -left-10 w-24 h-24 bg-orange-100 rounded-full opacity-50"></div>
             <div class="relative z-10">
-                <div class="w-16 h-16 bg-gradient-to-br from-sky-500 to-indigo-600 rounded-full flex items-center justify-center mx-auto mb-5 text-white text-2xl shadow-lg">
-                    <i class="fa-solid fa-lock"></i>
-                </div>
+                <div class="w-16 h-16 bg-gradient-to-br from-sky-500 to-indigo-600 rounded-full flex items-center justify-center mx-auto mb-5 text-white text-2xl shadow-lg"><i class="fa-solid fa-lock"></i></div>
                 <h2 class="text-2xl font-bold text-stone-800 mb-2 tracking-tight">專屬行程表</h2>
-                <p class="text-sm text-stone-500 mb-8">請輸入密碼以檢視最新 Jungfrau Lodge 訂製版</p>
+                <p class="text-sm text-stone-500 mb-8">請輸入密碼以檢視最新 雙基地鎖定版</p>
                 <div class="space-y-4">
-                    <div class="relative">
-                        <input type="password" id="pass-input" placeholder="2026" class="w-full px-5 py-4 rounded-xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent text-center text-lg tracking-widest bg-stone-50 transition-all" onkeypress="if(event.key === 'Enter') checkPassword()">
-                    </div>
+                    <div class="relative"><input type="password" id="pass-input" placeholder="2026" class="w-full px-5 py-4 rounded-xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent text-center text-lg tracking-widest bg-stone-50 transition-all" onkeypress="if(event.key === 'Enter') checkPassword()"></div>
                     <p id="pass-error" class="text-red-500 text-sm hidden font-medium animate-bounce">密碼錯誤，請重試</p>
-                    <button onclick="checkPassword()" class="w-full bg-stone-800 hover:bg-stone-900 text-white font-bold py-4 px-4 rounded-xl transition-colors shadow-md mt-2 flex items-center justify-center gap-2">
-                        <span>解鎖行程</span> <i class="fa-solid fa-arrow-right-to-bracket text-sm"></i>
-                    </button>
+                    <button onclick="checkPassword()" class="w-full bg-stone-800 hover:bg-stone-900 text-white font-bold py-4 px-4 rounded-xl transition-colors shadow-md mt-2 flex items-center justify-center gap-2"><span>解鎖行程</span> <i class="fa-solid fa-arrow-right-to-bracket text-sm"></i></button>
                 </div>
             </div>
         </div>
@@ -121,63 +48,43 @@
     <nav class="bg-white border-b border-stone-200 sticky top-0 z-50 shadow-sm">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
-                <div class="flex-shrink-0 flex items-center font-bold text-xl text-sky-800 tracking-wider">
-                    <i class="fa-solid fa-mountain-sun mr-2"></i> 義瑞盛夏自然之旅
-                </div>
+                <div class="flex-shrink-0 flex items-center font-bold text-xl text-sky-800 tracking-wider"><i class="fa-solid fa-mountain-sun mr-2"></i> 義瑞盛夏自然之旅</div>
                 <div class="hidden md:flex space-x-8 text-sm font-medium text-stone-600">
                     <a href="#itinerary" class="hover:text-sky-700">完整行程表</a>
                     <a href="#weather-strategy" class="hover:text-sky-700">天氣決策</a>
-                    <a href="#logistics" class="hover:text-sky-700">交通住宿指南</a>
+                    <a href="#logistics" class="hover:text-sky-700">住宿與物流</a>
                 </div>
             </div>
         </div>
     </nav>
 
     <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
-
         <!-- Hero Section -->
         <header class="text-center space-y-4 py-8">
             <h1 class="text-4xl md:text-5xl font-bold text-stone-800 tracking-tight">2026 義瑞盛夏自然之旅</h1>
             <p class="text-lg md:text-xl text-stone-500 max-w-2xl mx-auto italic">「高容錯、低疲勞。結合精準 SBB 交通銜接的完美親子計畫。」</p>
-            
             <div class="flex flex-wrap justify-center gap-4 mt-8">
-                <div class="bg-white px-4 py-2 rounded-full border border-stone-200 shadow-sm text-sm font-medium text-stone-600">
-                    <i class="fa-solid fa-people-group mr-1"></i> 兩大一小 (10歲)
-                </div>
-                <div class="bg-emerald-50 text-emerald-700 px-4 py-2 rounded-full border border-emerald-200 shadow-sm text-sm font-bold">
-                    <i class="fa-solid fa-check-circle mr-1"></i> 已鎖定保底住宿
-                </div>
+                <div class="bg-white px-4 py-2 rounded-full border border-stone-200 shadow-sm text-sm font-medium text-stone-600"><i class="fa-solid fa-people-group mr-1"></i> 兩大一小 (10歲)</div>
+                <div class="bg-emerald-50 text-emerald-700 px-4 py-2 rounded-full border border-emerald-200 shadow-sm text-sm font-bold"><i class="fa-solid fa-check-double mr-1"></i> 策馬特/格林德瓦 基地皆鎖定</div>
             </div>
         </header>
 
         <!-- Leaflet Map Section -->
         <section id="map-section" class="bg-white rounded-2xl shadow-sm border border-stone-100 p-6 md:p-8">
-            <div class="mb-6">
-                <h2 class="text-2xl font-bold text-stone-800 mb-2"><i class="fa-solid fa-map-location-dot text-emerald-600 mr-2"></i>瑞士地理總覽</h2>
-            </div>
-            <div class="map-wrapper shadow-sm border border-stone-200">
-                <div id="routeMap" class="w-full h-full z-10"></div>
-            </div>
+            <div class="mb-6"><h2 class="text-2xl font-bold text-stone-800 mb-2"><i class="fa-solid fa-map-location-dot text-emerald-600 mr-2"></i>瑞士地理總覽</h2></div>
+            <div class="map-wrapper shadow-sm border border-stone-200"><div id="routeMap" class="w-full h-full z-10"></div></div>
         </section>
 
         <!-- Section 1: Dashboard -->
         <section id="overview" class="bg-white rounded-2xl shadow-sm border border-stone-100 p-6 md:p-8">
-            <div class="mb-6">
-                <h2 class="text-2xl font-bold text-stone-800 mb-2"><i class="fa-solid fa-temperature-half text-red-500 mr-2"></i>海拔與氣溫趨勢</h2>
-            </div>
-            <div class="chart-container">
-                <canvas id="travelChart"></canvas>
-            </div>
+            <div class="mb-6"><h2 class="text-2xl font-bold text-stone-800 mb-2"><i class="fa-solid fa-temperature-half text-red-500 mr-2"></i>海拔與氣溫趨勢</h2></div>
+            <div class="chart-container"><canvas id="travelChart"></canvas></div>
         </section>
 
         <!-- Section 2: Full Expanded Itinerary -->
         <section id="itinerary" class="space-y-12">
-            <div class="mb-4">
-                <h2 class="text-2xl font-bold text-stone-800 mb-2"><i class="fa-solid fa-calendar-days text-sky-600 mr-2"></i>11 天深度行程 (Jungfrau Lodge 版)</h2>
-            </div>
-            <div id="itinerary-content" class="space-y-16">
-                <!-- Content injected via JS -->
-            </div>
+            <div class="mb-4"><h2 class="text-2xl font-bold text-stone-800 mb-2"><i class="fa-solid fa-calendar-days text-sky-600 mr-2"></i>11 天深度行程 (雙基地鎖定版)</h2></div>
+            <div id="itinerary-content" class="space-y-16"></div>
         </section>
 
         <!-- Section Weather Strategy -->
@@ -201,7 +108,7 @@
                             <td class="px-4 py-4 font-bold bg-stone-50/50">策馬特</td>
                             <td class="px-4 py-4">Gornergrat 拍倒影</td>
                             <td class="px-4 py-4">萊湖放電 / 小鎮健行</td>
-                            <td class="px-4 py-4">民宿休息 / 洗衣服 / 吃飯</td>
+                            <td class="px-4 py-4">公寓自炊 / 洗衣服 / 休息</td>
                         </tr>
                         <tr>
                             <td class="px-4 py-4 font-bold bg-stone-50/50">格林德瓦</td>
@@ -217,28 +124,26 @@
         <!-- Section 3: Logistics -->
         <section id="logistics" class="mb-16 grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div class="bg-white rounded-2xl shadow-sm border border-stone-100 p-6">
-                <h3 class="text-lg font-bold text-stone-800 mb-4 flex items-center"><i class="fa-solid fa-hotel text-sky-600 mr-2"></i>Jungfrau Lodge 實戰策略</h3>
+                <h3 class="text-lg font-bold text-emerald-700 mb-4 flex items-center"><i class="fa-solid fa-house-chimney text-emerald-600 mr-2"></i>基地 1：Haus Matten (策馬特)</h3>
                 <div class="text-sm space-y-3 text-stone-600">
-                    <p><strong><i class="fa-solid fa-suitcase mr-1"></i> 行李收納：</strong>房間為 22 平方公尺，走道較窄。建議入住時將衣物拿出掛入衣櫥，大行李箱合起直立靠牆，以保留走動空間。</p>
-                    <p><strong><i class="fa-solid fa-utensils mr-1"></i> 無廚房救星：</strong>飯店有含早餐。晚餐可步行至主車站旁的 Coop 大型超市，採買烤半雞、沙拉盒。務必確認房內有快煮壺，可搭配熱湯或泡麵。</p>
+                    <p><strong><i class="fa-solid fa-kitchen-set mr-1"></i> 全能大廚房：</strong>這 4 晚是您的主廚時刻！抵達第一天去 Coop 大採買，牛排、義大利麵、瑞士雞蛋隨您煮。旅行鍋這幾天可以先不用拿出來。</p>
+                    <p><strong><i class="fa-solid fa-mountain mr-1"></i> 陽台景觀：</strong>公寓在 4 樓且有電梯。陽台朝南直對馬特洪峰，清晨起床直接在客廳等日照金山即可，完全不用出門吹冷風。</p>
                 </div>
             </div>
             <div class="bg-white rounded-2xl shadow-sm border border-stone-100 p-6">
-                <h3 class="text-lg font-bold text-stone-800 mb-4 flex items-center"><i class="fa-solid fa-suitcase-rolling text-amber-600 mr-2"></i>轉車與行李實戰心法</h3>
-                <p class="text-sm text-stone-600 leading-relaxed">瑞士火車轉乘（如 Visp, Spiez）設計極佳，月台間皆有斜坡或電梯。請注意：上下火車時門口有高低差，大人先上車接應小孩與行李。轉車時間即使只有 10 分鐘，只要不猶豫跟著人群走，絕對來得及。</p>
+                <h3 class="text-lg font-bold text-sky-800 mb-4 flex items-center"><i class="fa-solid fa-hotel text-sky-600 mr-2"></i>基地 2：Jungfrau Lodge (格林德瓦)</h3>
+                <div class="text-sm space-y-3 text-stone-600">
+                    <p><strong><i class="fa-solid fa-suitcase mr-1"></i> 立體收納：</strong>房間 22 平方公尺。入住後請將衣物掛入衣櫥，大行李箱直立靠牆，以保留走動空間。</p>
+                    <p><strong><i class="fa-solid fa-plug mr-1"></i> 雙電壓鍋上場：</strong>因為沒廚房，此時拿出您準備的「雙電壓旅行鍋」，搭配主車站 Coop 買的熱食，解決晚餐與宵夜。</p>
+                </div>
             </div>
         </section>
 
     </main>
 
-    <footer class="bg-stone-800 text-stone-300 py-12 text-center text-sm">
-        <p>2026 義瑞盛夏自然之旅規劃 · 以家人的體力為中心，以美景為目標</p>
-    </footer>
+    <footer class="bg-stone-800 text-stone-300 py-12 text-center text-sm"><p>2026 義瑞盛夏自然之旅規劃 · 以家人的體力為中心，以美景為目標</p></footer>
 
     <script>
-        // ==========================================
-        // 🔒 密碼系統
-        // ==========================================
         const SECRET_PASS_BASE64 = "MjAyNg=="; 
         function checkPassword() {
             const input = document.getElementById('pass-input').value;
@@ -260,9 +165,6 @@
             }, 500); 
         }
 
-        // ==========================================
-        // 🌍 互動地圖
-        // ==========================================
         let mapInitialized = false;
         function initMap() {
             if(mapInitialized) return;
@@ -270,8 +172,8 @@
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OpenStreetMap' }).addTo(window.myMap);
             const bases = [
                 { name: "米蘭機場 (MXP)", coords: [45.6300, 8.7255] },
-                { name: "① 策馬特基地", coords: [46.0207, 7.7491] },
-                { name: "② 格林德瓦基地", coords: [46.6241, 8.0414] },
+                { name: "① Haus Matten", coords: [46.0207, 7.7491] },
+                { name: "② Jungfrau Lodge", coords: [46.6241, 8.0414] },
                 { name: "③ 琉森基地", coords: [47.0501, 8.3093] },
                 { name: "蘇黎世機場 (ZRH)", coords: [47.4647, 8.5491] }
             ];
@@ -294,18 +196,15 @@
             mapInitialized = true;
         }
 
-        // ==========================================
-        // 📅 行程資料 (Updated for Jungfrau Lodge)
-        // ==========================================
         const itineraryData = {
             station1: {
                 title: "第一站：策馬特．名峰之巔 (Zermatt)",
-                hotel: "推薦預訂：Haus Matten 或 Haus Viktoria A (有洗衣機為佳)",
+                hotel: "已鎖定：Haus Matten (Apartment Gant) | 附電梯、大廚房、朝南陽台",
                 days: [
                     {
                         date: "8/08 (六) Day 1",
                         route: "抵達米蘭 ➔ 跨越邊境 ➔ 策馬特 (長途移動日)",
-                        content: `<strong class='text-sky-800'>【交通策略】</strong> 在米蘭中央車站保留 1 小時 15 分鐘的緩衝買午餐。
+                        content: `<strong class='text-sky-800'>【交通策略】</strong> 在米蘭中央車站保留緩衝吃午餐。
                         <div class="schedule-box shadow-sm">
                             <div class="schedule-row"><span class="schedule-time">11:13</span> <span class="schedule-station">米蘭機場 MXP</span> <span class="schedule-train">Malpensa Express</span></div>
                             <div class="schedule-row"><span class="schedule-time">12:05</span> <span class="schedule-station">米蘭中央車站 (抵達)</span></div>
@@ -314,27 +213,27 @@
                             <div class="schedule-row"><span class="schedule-time">15:16</span> <span class="schedule-station">瑞士 Brig (轉乘)</span> <span class="schedule-train">MGB 景觀列車</span></div>
                             <div class="schedule-row"><span class="schedule-time">17:14</span> <span class="schedule-station">抵達 策馬特 (Zermatt)</span></div>
                         </div>
-                        <p class="text-sm mt-2">抵達後直接進房洗澡，晚餐吃飽後直接休息補眠，為隔天調整時差。</p>`,
+                        <p class="text-sm mt-2">抵達後搭電梯直上 4 樓公寓。進房洗澡，晚上去超市買簡單食材回來<strong>使用公寓大廚房開伙</strong>，吃飽後直接休息。</p>`,
                         transport: "機場快線 + EC 快車 + MGB 列車",
                         temp: "預估 20°C", duration: "含緩衝約 6 小時", departure: "11:13 (機場發車)",
                         photoTip: "火車駛入 Mattertal 峽谷時適合錄製動態影片",
-                        food: "米蘭車站買 Pizza 或三明治帶上跨國火車吃",
+                        food: "在自己專屬的阿爾卑斯木屋廚房享用第一餐",
                         highlight: "成功挺過轉車考驗，迎接無煙小鎮"
                     },
                     {
                         date: "8/09 (日) Day 2",
                         route: "策馬特小鎮 (海拔適應回血日)",
-                        content: "<strong class='text-sky-800'>【全天】</strong> 睡到自然醒。帶孩子在小鎮逛逛、看馬特洪峰博物館。這天絕對不上山，讓身體完全適應 1600m 的海拔。",
+                        content: "<strong class='text-sky-800'>【全天】</strong> 睡到自然醒。小孩可體驗客廳的隱藏式墨菲床 (Murphy beds)。白天帶孩子在小鎮逛逛、去 Coop 大採買未來幾天的伙食。這天不上山，讓身體完全適應 1600m 的海拔。",
                         transport: "步行",
                         temp: "預估 22°C", duration: "完全彈性", departure: "睡到自然醒",
-                        photoTip: "在小鎮橋上迎接馬特洪峰的初次露臉",
-                        food: "推薦：黑面羊肉料理或傳統起司烤餅 (Raclette)",
+                        photoTip: "在公寓的朝南陽台，直接拍攝專屬的馬特洪峰",
+                        food: "買牛排或黑面羊肉回來公寓自炊，享受無價景觀",
                         highlight: "零壓力的時差調整，感受純淨瑞士生活"
                     },
                     {
                         date: "8/10 (一) Day 3",
                         route: "高納葛拉特 (Gornergrat) 倒影攝影日",
-                        content: "<strong class='text-sky-800'>【上午】</strong> <strong class='text-red-600'>出門前看 Webcam。</strong>若無雲無風，直衝 Riffelsee 拍倒影；若雲厚則改為單純上山觀景。下午提早下山回鎮上，避免連續疲勞。",
+                        content: "<strong class='text-sky-800'>【上午】</strong> <strong class='text-red-600'>出門前看 Webcam。</strong>若無雲無風，直衝 Riffelsee 拍倒影；若雲厚則改為單純上山觀景。下午提早下山回公寓，在客廳喝咖啡休息。",
                         transport: "GGB 齒軌火車",
                         temp: "峰頂 5°C", duration: "單程 35 分鐘", departure: "07:00 (衝景必選)",
                         photoTip: "Riffelsee 湖畔是 iPhone 廣角與倒影的黃金位置",
@@ -344,11 +243,11 @@
                     {
                         date: "8/11 (二) Day 4",
                         route: "冰川天堂與萊湖 (彈性撤退日)",
-                        content: "<strong class='text-sky-800'>【上午】</strong> 若能見度差，建議直接取消冰川天堂行程，改至 Leisee 萊湖放電。3883m 海拔極高，若孩子感到頭痛不適，應立即撤退。",
+                        content: "<strong class='text-sky-800'>【上午】</strong> 若能見度差，取消冰川天堂，改至 Leisee 萊湖放電。公寓離 Sunnegga 纜車站極近，去萊湖非常方便。3883m 海拔極高，若孩子感到頭痛不適，應立即撤退。",
                         transport: "大型高山纜車",
                         temp: "峰頂 -2°C", duration: "單程 45 分鐘", departure: "08:30 前",
                         photoTip: "電影模式拍攝小孩在萊湖玩水上木筏",
-                        food: "在萊湖畔對著群山野餐，享受陽光",
+                        food: "自製三明治帶去萊湖畔野餐",
                         highlight: "冰川天堂冰宮探險 + 親子放電樂園"
                     }
                 ]
@@ -360,18 +259,18 @@
                     {
                         date: "8/12 (三) Day 5",
                         route: "策馬特 ➔ 格林德瓦 (悠閒轉場移動日)",
-                        content: `<strong class='text-sky-800'>【上午】</strong> 睡飽退房。搭乘 10:37 班車離開策馬特，約 13:34 抵達格林德瓦 (Grindelwald Bahnhof)。
-                        <br><br><strong class='text-sky-800'>【下午】</strong> 步行 3 分鐘入住 <strong>Jungfrau Lodge</strong>。因房間 (22平米) 空間有限，建議將這幾天的衣物拿出放進衣櫥，大行李直立靠牆。傍晚步行至主車站旁的 Coop 超市採買烤雞、沙拉等熟食回陽台享用。`,
+                        content: `<strong class='text-sky-800'>【上午】</strong> 從 Haus Matten 退房。搭乘 10:37 班車離開策馬特，約 13:34 抵達格林德瓦 (Grindelwald Bahnhof)。
+                        <br><br><strong class='text-sky-800'>【下午】</strong> 步行入住 <strong>Jungfrau Lodge</strong>。將大行李直立靠牆。傍晚步行至主車站 Coop 超市，此時<strong>拿出雙電壓旅行鍋</strong>準備簡單的晚餐。`,
                         transport: "IC 城際列車 + BOB 鐵路",
                         temp: "預估 22°C", duration: "約 3 小時", departure: "10:37 班次",
                         photoTip: "火車行經 Spiez 後可捕捉圖恩湖翠綠水色",
-                        food: "Coop 超市必買：現烤半雞與各式熱食",
+                        food: "Coop 買烤半雞，旅行鍋煮熱湯或泡麵配著吃",
                         highlight: "零摩擦力的移動體驗，為攻頂儲備能量"
                     },
                     {
                         date: "8/13 (四) Day 6",
                         route: "菲斯特 (First) 冒險輕健行",
-                        content: "<strong class='text-sky-800'>【全天】</strong> 在飯店享用完早餐後，前往 First 山頂進行 Bachalpsee 湖泊健行。下午體驗卡丁車 (Mountain Cart) 溜下山。",
+                        content: "<strong class='text-sky-800'>【全天】</strong> 享用飯店早餐後，前往 First 山頂進行 Bachalpsee 湖泊健行。下午體驗卡丁車 (Mountain Cart) 溜下山。",
                         transport: "First 景觀纜車",
                         temp: "山腰 12°C", duration: "單程 25 分鐘", departure: "08:30 前搶卡丁車",
                         photoTip: "卡丁車下山時使用 0.5x 廣角拍攝臨場感",
@@ -413,7 +312,7 @@
                     {
                         date: "8/16 (日) Day 9",
                         route: "黃金快線 ➔ 琉森 (放鬆模式開啟)",
-                        content: `<strong class='text-sky-800'>【下午】</strong> 搭乘黃金快線 (Luzern-Interlaken Express)。抵達琉森後進入『節能模式』。帶著小孩在琉森湖畔餵天鵝、逛古城，不要排任何體力行程。`,
+                        content: `<strong class='text-sky-800'>【下午】</strong> 搭乘黃金快線。抵達琉森後進入『節能模式』。帶著小孩在琉森湖畔餵天鵝、逛古城，不要排任何體力行程。`,
                         transport: "Luzern-Interlaken Express",
                         temp: "預估 25°C", duration: "約 2.5 小時", departure: "10:18 (格林德瓦發車)",
                         photoTip: "列車右側窗外的湖景是縮時攝影首選",
@@ -452,10 +351,7 @@
                 html += `
                 <div class="fade-in">
                     <div class="station-header flex flex-wrap justify-between items-center mb-10 gap-2 border-b-4 border-sky-800/20 pb-4 pt-4">
-                        <h3 class="text-2xl md:text-3xl font-extrabold text-sky-900 flex items-center">
-                            <span class="w-10 h-10 bg-sky-800 text-white rounded-lg flex items-center justify-center mr-3 shadow-md text-xl">${key.slice(-1)}</span>
-                            ${data.title}
-                        </h3>
+                        <h3 class="text-2xl md:text-3xl font-extrabold text-sky-900 flex items-center"><span class="w-10 h-10 bg-sky-800 text-white rounded-lg flex items-center justify-center mr-3 shadow-md text-xl">${key.slice(-1)}</span>${data.title}</h3>
                         <span class="text-xs md:text-sm bg-emerald-50 text-emerald-700 px-4 py-2 rounded-full border border-emerald-200 shadow-sm font-bold flex items-center"><i class="fa-solid fa-key mr-2"></i>${data.hotel}</span>
                     </div>
                     <div class="space-y-12">`;
@@ -466,11 +362,8 @@
                             <p class="text-base font-bold text-stone-800">${day.date}</p>
                             <p class="text-xs text-stone-500 font-medium mt-1 mb-3"><i class="fa-solid fa-train-subway mr-1"></i>${day.transport}</p>
                             <div class="flex flex-col gap-2">
-                                <div class="flex gap-1">
-                                    <span class="text-[10px] text-orange-600 font-bold bg-orange-100 px-2 py-0.5 rounded-full">${day.temp}</span>
-                                    <span class="text-[10px] text-sky-600 font-bold bg-sky-100 px-2 py-0.5 rounded-full">${day.duration}</span>
-                                </div>
-                                <div class="text-[10px] text-indigo-700 font-bold bg-indigo-100 px-3 py-1 rounded-md border border-indigo-200"><i class="fa-solid fa-flag-checkered mr-1"></i>建議出發: ${day.departure}</div>
+                                <div class="flex gap-1"><span class="text-[10px] text-orange-600 font-bold bg-orange-100 px-2 py-0.5 rounded-full">${day.temp}</span><span class="text-[10px] text-sky-600 font-bold bg-sky-100 px-2 py-0.5 rounded-full">${day.duration}</span></div>
+                                <div class="text-[10px] text-indigo-700 font-bold bg-indigo-100 px-3 py-1 rounded-md border border-indigo-200"><i class="fa-solid fa-flag-checkered mr-1"></i>出發: ${day.departure}</div>
                             </div>
                         </div>
                         <div class="lg:col-span-6 flex flex-col justify-center">
@@ -501,10 +394,7 @@
                     { label: '氣溫 (°C)', data: temps, borderColor: '#EA580C', backgroundColor: 'transparent', yAxisID: 'y1', tension: 0.3, borderDash: [5, 5], pointRadius: 5 }
                 ]},
                 options: { responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false }, plugins: { legend: { position: 'top' } },
-                    scales: {
-                        y: { type: 'linear', position: 'left', title: { display: true, text: '海拔' }, ticks: { callback: v => v + 'm' } },
-                        y1: { type: 'linear', position: 'right', title: { display: true, text: '氣溫' }, grid: { drawOnChartArea: false }, ticks: { callback: v => v + '°' } }
-                    }
+                    scales: { y: { type: 'linear', position: 'left', title: { display: true, text: '海拔' }, ticks: { callback: v => v + 'm' } }, y1: { type: 'linear', position: 'right', title: { display: true, text: '氣溫' }, grid: { drawOnChartArea: false }, ticks: { callback: v => v + '°' } } }
                 }
             });
         }
@@ -514,9 +404,7 @@
                 document.getElementById('password-overlay').style.display = 'none';
                 document.body.style.overflow = 'auto';
                 initMap(); initChart(); renderAllItineraries();
-            } else {
-                document.getElementById('pass-input').focus();
-            }
+            } else { document.getElementById('pass-input').focus(); }
         });
     </script>
 </body>
