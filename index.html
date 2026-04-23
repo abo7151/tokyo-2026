@@ -23,47 +23,47 @@
         <div class="inline-flex items-center justify-center p-4 bg-gradient-to-br from-sky-100 to-indigo-100 rounded-full text-indigo-600 mb-6 shadow-sm">
             <i data-lucide="plane-takeoff" class="w-10 h-10"></i>
         </div>
-        <h1 class="text-4xl md:text-5xl font-black text-slate-800 tracking-tight mb-4">專屬旅遊行程總覽</h1>
-        <p class="text-lg text-slate-500 max-w-lg mx-auto font-medium">記錄每一次的足跡與回憶，隨時準備下一次的啟航。</p>
+        <h1 class="text-4xl md:text-5xl font-black text-stone-800 tracking-tight mb-4">專屬旅遊行程總覽</h1>
+        <p class="text-lg text-stone-500 max-w-lg mx-auto font-medium">記錄每一次的足跡與回憶，隨時準備下一次的啟航。</p>
     </header>
 
     <main class="max-w-6xl mx-auto px-6">
         <!-- Upcoming Trips -->
         <section class="mb-16">
             <div class="flex items-center mb-8">
-                <h2 class="text-2xl font-bold text-slate-800 flex items-center">
+                <h2 class="text-2xl font-bold text-stone-800 flex items-center">
                     <i data-lucide="calendar-clock" class="w-6 h-6 mr-2 text-emerald-500"></i> 即將出發
                 </h2>
-                <div class="ml-4 h-px flex-grow bg-slate-200"></div>
+                <div class="ml-4 h-px flex-grow bg-stone-200"></div>
             </div>
             <div id="upcoming-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Upcoming Cards -->
             </div>
-            <div id="upcoming-empty" class="hidden text-center py-12 bg-white/50 backdrop-blur-sm rounded-3xl border border-slate-200 border-dashed">
-                <i data-lucide="calendar-off" class="w-12 h-12 text-slate-300 mx-auto mb-3"></i>
-                <p class="text-slate-500 font-medium">目前沒有即將出發的行程</p>
+            <div id="upcoming-empty" class="hidden text-center py-12 bg-white/50 backdrop-blur-sm rounded-3xl border border-stone-200 border-dashed">
+                <i data-lucide="calendar-off" class="w-12 h-12 text-stone-300 mx-auto mb-3"></i>
+                <p class="text-stone-500 font-medium">目前沒有即將出發的行程</p>
             </div>
         </section>
 
         <!-- Past Trips -->
         <section>
             <div class="flex items-center mb-8">
-                <h2 class="text-2xl font-bold text-slate-400 flex items-center">
+                <h2 class="text-2xl font-bold text-stone-400 flex items-center">
                     <i data-lucide="archive" class="w-6 h-6 mr-2"></i> 過期回憶
                 </h2>
-                <div class="ml-4 h-px flex-grow bg-slate-200"></div>
+                <div class="ml-4 h-px flex-grow bg-stone-200"></div>
             </div>
             <div id="past-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Past Cards -->
             </div>
-            <div id="past-empty" class="hidden text-center py-12 bg-slate-50/50 rounded-3xl border border-slate-200 border-dashed">
-                <i data-lucide="folder-open" class="w-12 h-12 text-slate-200 mx-auto mb-3"></i>
-                <p class="text-slate-400 font-medium">目前沒有已結束的行程</p>
+            <div id="past-empty" class="hidden text-center py-12 bg-stone-50/50 rounded-3xl border border-stone-200 border-dashed">
+                <i data-lucide="folder-open" class="w-12 h-12 text-stone-200 mx-auto mb-3"></i>
+                <p class="text-stone-400 font-medium">目前沒有已結束的行程</p>
             </div>
         </section>
     </main>
 
-    <footer class="text-center mt-20 text-slate-400 text-sm font-medium">
+    <footer class="text-center mt-20 text-stone-400 text-sm font-medium">
         <p>© 2026 World Adventure Planner</p>
     </footer>
 
@@ -107,10 +107,10 @@
 
         // 佈景主題定義
         const themes = {
-            blue: { bg: "bg-blue-50", text: "text-blue-600", border: "border-blue-100", hover: "hover:border-blue-300", gradient: "to-blue-50" },
+            blue: { bg: "bg-sky-50", text: "text-sky-600", border: "border-sky-100", hover: "hover:border-sky-300", gradient: "to-sky-50" },
             emerald: { bg: "bg-emerald-50", text: "text-emerald-600", border: "border-emerald-100", hover: "hover:border-emerald-300", gradient: "to-emerald-50" },
             orange: { bg: "bg-orange-50", text: "text-orange-600", border: "border-orange-100", hover: "hover:border-orange-300", gradient: "to-orange-50" },
-            slate: { bg: "bg-slate-100", text: "text-slate-500", border: "border-slate-200", hover: "hover:border-slate-300", gradient: "to-slate-50" }
+            slate: { bg: "bg-stone-100", text: "text-stone-500", border: "border-stone-200", hover: "hover:border-stone-300", gradient: "to-stone-50" }
         };
 
         // 計算剩餘天數
@@ -141,10 +141,10 @@
                 } else if (daysLeft > 0 && daysLeft <= 30) {
                     badgeHtml = `<span class="bg-amber-100 text-amber-700 text-xs font-bold px-2.5 py-1 rounded-full border border-amber-200 shadow-sm">倒數 ${daysLeft} 天</span>`;
                 } else if (daysLeft > 30) {
-                    badgeHtml = `<span class="bg-slate-100 text-slate-600 text-xs font-bold px-2.5 py-1 rounded-full border border-slate-200 shadow-sm">還有 ${daysLeft} 天</span>`;
+                    badgeHtml = `<span class="bg-stone-100 text-stone-600 text-xs font-bold px-2.5 py-1 rounded-full border border-stone-200 shadow-sm">還有 ${daysLeft} 天</span>`;
                 }
             } else {
-                badgeHtml = `<span class="bg-slate-200 text-slate-500 text-xs font-bold px-2.5 py-1 rounded-full border border-slate-300">已結束</span>`;
+                badgeHtml = `<span class="bg-stone-200 text-stone-500 text-xs font-bold px-2.5 py-1 rounded-full border border-stone-300">已結束</span>`;
             }
 
             return `
@@ -157,16 +157,16 @@
                             </div>
                             <div>${badgeHtml}</div>
                         </div>
-                        <h3 class="text-xl font-bold text-slate-800 mb-2 leading-tight group-hover:text-indigo-600 transition-colors">${trip.title}</h3>
-                        <div class="flex items-center text-sm text-slate-500 mb-3 font-medium">
-                            <i data-lucide="map-pin" class="w-4 h-4 mr-1.5 text-slate-400"></i> ${trip.location}
+                        <h3 class="text-xl font-bold text-stone-800 mb-2 leading-tight group-hover:text-indigo-600 transition-colors">${trip.title}</h3>
+                        <div class="flex items-center text-sm text-stone-500 mb-3 font-medium">
+                            <i data-lucide="map-pin" class="w-4 h-4 mr-1.5 text-stone-400"></i> ${trip.location}
                         </div>
-                        <div class="inline-flex items-center text-xs text-slate-500 mb-4 font-mono bg-slate-50 border border-slate-100 px-2.5 py-1 rounded-md">
-                            <i data-lucide="calendar" class="w-3.5 h-3.5 mr-1.5 text-slate-400"></i> ${dateString}
+                        <div class="inline-flex items-center text-xs text-stone-500 mb-4 font-mono bg-stone-50 border border-stone-100 px-2.5 py-1 rounded-md">
+                            <i data-lucide="calendar" class="w-3.5 h-3.5 mr-1.5 text-stone-400"></i> ${dateString}
                         </div>
-                        <p class="text-sm text-slate-600 line-clamp-2 leading-relaxed">${trip.description}</p>
+                        <p class="text-sm text-stone-600 line-clamp-2 leading-relaxed">${trip.description}</p>
                         
-                        <div class="mt-5 pt-4 border-t border-slate-50 flex items-center text-sm font-bold ${theme.text} opacity-0 group-hover:opacity-100 transition-all transform -translate-x-2 group-hover:translate-x-0">
+                        <div class="mt-5 pt-4 border-t border-stone-50 flex items-center text-sm font-bold ${theme.text} opacity-0 group-hover:opacity-100 transition-all transform -translate-x-2 group-hover:translate-x-0">
                             檢視行程表 <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i>
                         </div>
                     </div>
