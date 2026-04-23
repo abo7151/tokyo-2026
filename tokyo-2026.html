@@ -6,10 +6,10 @@
     <title>2026 東京之旅 | 專屬行程規劃</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0    <style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
         html { font-size: 112.5%; } 
         body { font-family: 'Inter', 'Noto Sans TC', sans-serif; background-color: #FAFAF9; color: #292524; scroll-behavior: smooth; }
         .tab-content { display: none; }
@@ -31,7 +31,6 @@
             backdrop-filter: blur(12px);
             transition: opacity 0.5s ease;
         }
-        #main-content { display: none; }
         .fade-in { animation: fadeIn 0.4s ease-out; } @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
@@ -53,27 +52,24 @@
                 </div>
             </div>
         </div>
-    </div>ass="mt-4 text-red-500 text-sm hidden">密碼錯誤，請再試一次。</p>
-
-        </div>
     </div>
 
     <!-- 行程表主內容 -->
-    <div id="main-content" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+    <div id="main-content" class="hidden max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
         <!-- Hero Section -->
-        <header class="relative rounded-3xl overflow-hidden shadow-2xl mb-12">
-            <div class="absolute inset-0 bg-gradient-to-br from-indigo-950 via-stone-900 to-indigo-900 opacity-95"></div>
+        <header class="relative rounded-3xl overflow-hidden border border-indigo-200 shadow-xl mb-12">
+            <div class="absolute inset-0 bg-gradient-to-br from-indigo-200 via-indigo-100 to-stone-100 opacity-95"></div>
             <img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&q=80&w=2000" 
                  alt="Tokyo" 
-                 class="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-overlay" />
+                 class="absolute inset-0 w-full h-full object-cover opacity-10 mix-blend-multiply" />
             
             <div class="relative z-10 text-center py-16 px-6">
-                <div class="inline-block mb-4 px-4 py-1.5 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-indigo-200 text-xs font-bold tracking-[0.2em] uppercase shadow-inner">2026 Spring Trip</div>
-                <h1 class="text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-tight drop-shadow-md mb-4">2026 東京之旅</h1>
-                <p class="text-lg md:text-xl text-indigo-100 max-w-2xl mx-auto font-light tracking-wide drop-shadow mb-8">4/30 (Thu) - 5/03 (Sun) · 四天三夜專屬行程</p>
+                <div class="inline-block mb-4 px-4 py-1.5 bg-indigo-600 border border-indigo-500 rounded-full text-white text-xs font-bold tracking-[0.2em] uppercase shadow-sm">2026 Spring Trip</div>
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-black text-indigo-950 tracking-tight mb-4">2026 東京之旅</h1>
+                <p class="text-lg md:text-xl text-indigo-900/70 max-w-2xl mx-auto font-light tracking-wide mb-8">4/30 (Thu) - 5/03 (Sun) · 四天三夜專屬行程</p>
                 <div class="flex flex-wrap justify-center gap-4 pt-2">
-                    <div class="bg-white/10 backdrop-blur-md px-5 py-2.5 rounded-full border border-white/20 shadow-xl text-sm font-medium text-white flex items-center transition-all duration-300 hover:bg-white/20 hover:-translate-y-1"><i class="fa-solid fa-plane mr-2 text-indigo-300"></i> 長榮 BR102 抵達</div>
-                    <div class="bg-indigo-500/20 backdrop-blur-md text-indigo-100 px-5 py-2.5 rounded-full border border-indigo-400/30 shadow-xl text-sm font-bold flex items-center transition-all duration-300 hover:bg-indigo-500/30 hover:-translate-y-1"><i class="fa-solid fa-hotel mr-2 text-indigo-400"></i> 羽田 & 上野基地</div>
+                    <div class="bg-white/80 backdrop-blur-sm px-5 py-2.5 rounded-full border border-indigo-200 shadow-sm text-sm font-medium text-indigo-900 flex items-center transition-all duration-300 hover:shadow-md hover:-translate-y-1"><i class="fa-solid fa-plane mr-2 text-indigo-600"></i> 長榮 BR102 抵達</div>
+                    <div class="bg-indigo-800 text-white px-5 py-2.5 rounded-full border border-indigo-700 shadow-lg text-sm font-bold flex items-center transition-all duration-300 hover:bg-indigo-900 hover:-translate-y-1 shadow-indigo-300/50"><i class="fa-solid fa-hotel mr-2 text-white"></i> 羽田 & 上野基地</div>
                 </div>
             </div>
         </header>
@@ -338,7 +334,6 @@
         </footer>
     </div>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
         // 初始化 Lucide 圖標
         lucide.createIcons();
@@ -360,10 +355,11 @@
             const hashed = await hashPassword(input);
 
             if (hashed === '5768c50f891d9eb2a286ce4e1c954fb7a6b3919762037dd8ee841647d23fd220') {
+                sessionStorage.setItem('tokyo_auth', 'unlocked');
                 overlay.style.opacity = '0';
                 setTimeout(() => {
                     overlay.style.display = 'none';
-                    mainContent.style.display = 'block';
+                    mainContent.classList.remove('hidden');
                     window.scrollTo(0, 0);
                     // 重新渲染圖標
                     lucide.createIcons();
@@ -391,6 +387,14 @@
             
             window.scrollTo({ top: document.querySelector('nav').offsetTop - 20, behavior: 'smooth' });
         }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (sessionStorage.getItem('tokyo_auth') === 'unlocked') {
+                document.getElementById('password-overlay').style.display = 'none';
+                document.getElementById('main-content').classList.remove('hidden');
+                lucide.createIcons();
+            }
+        });
     </script>
 </body>
 </html>

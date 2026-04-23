@@ -46,17 +46,17 @@
 
     <!-- 主要內容 -->
     <div id="main-content" class="hidden max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
-        <header class="relative rounded-3xl overflow-hidden shadow-2xl mb-12">
-            <div class="absolute inset-0 bg-gradient-to-br from-sky-950 via-stone-900 to-indigo-900 opacity-95"></div>
-            <div class="absolute inset-0 opacity-[0.03] mix-blend-overlay" style="background-image: url('data:image/svg+xml,%3Csvg width=%2220%22 height=%2220%22 viewBox=%220 0 20 20%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cg fill=%22%23ffffff%22 fill-opacity=%221%22 fill-rule=%22evenodd%22%3E%3Ccircle cx=%223%22 cy=%223%22 r=%223%22/%3E%3Ccircle cx=%2213%22 cy=%2213%22 r=%223%22/%3E%3C/g%3E%3C/svg%3E');"></div>
+        <header class="relative rounded-3xl overflow-hidden border border-sky-200 shadow-xl mb-12">
+            <div class="absolute inset-0 bg-gradient-to-br from-sky-200 via-sky-100 to-stone-100 opacity-95"></div>
+            <div class="absolute inset-0 opacity-[0.03] mix-blend-overlay" style="background-image: url('data:image/svg+xml,%3Csvg width=%2220%22 height=%2220%22 viewBox=%220 0 20 20%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cg fill=%22%230284c7%22 fill-opacity=%221%22 fill-rule=%22evenodd%22%3E%3Ccircle cx=%223%22 cy=%223%22 r=%223%22/%3E%3Ccircle cx=%2213%22 cy=%2213%22 r=%223%22/%3E%3C/g%3E%3C/svg%3E');"></div>
             
             <div class="relative z-10 text-center py-16 px-6">
-                <div class="inline-block mb-4 px-4 py-1.5 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-sky-200 text-xs font-bold tracking-[0.2em] uppercase shadow-inner">2027 Winter Adventure</div>
-                <h1 class="text-3xl md:text-5xl lg:text-6xl font-black text-white tracking-tight drop-shadow-md mb-4">2027 九州 ‧ 北海道</h1>
-                <p class="text-lg md:text-xl text-sky-100 max-w-2xl mx-auto font-light tracking-wide drop-shadow mb-8">小倉門司鐵道迷必看 ‧ 慢活福岡 ‧ 北海道大家族銜接</p>
+                <div class="inline-block mb-4 px-4 py-1.5 bg-sky-600 border border-sky-500 rounded-full text-white text-xs font-bold tracking-[0.2em] uppercase shadow-sm">2027 Winter Adventure</div>
+                <h1 class="text-3xl md:text-5xl lg:text-6xl font-black text-sky-950 tracking-tight mb-4">2027 九州 ‧ 北海道</h1>
+                <p class="text-lg md:text-xl text-sky-900/70 max-w-2xl mx-auto font-light tracking-wide mb-8">小倉門司鐵道迷必看 ‧ 慢活福岡 ‧ 北海道大家族銜接</p>
                 <div class="flex flex-wrap justify-center gap-4 pt-2">
-                    <div class="bg-white/10 backdrop-blur-md px-5 py-2.5 rounded-full border border-white/20 shadow-xl text-sm font-medium text-white flex items-center transition-all duration-300 hover:bg-white/20 hover:-translate-y-1"><i class="fa-solid fa-train-subway mr-2 text-sky-300"></i> 特急 Sonic 攻略</div>
-                    <div class="bg-sky-500/20 backdrop-blur-md text-sky-100 px-5 py-2.5 rounded-full border border-sky-400/30 shadow-xl text-sm font-bold flex items-center transition-all duration-300 hover:bg-sky-500/30 hover:-translate-y-1"><i class="fa-solid fa-snowflake mr-2 text-sky-400"></i> 家族滑雪銜接</div>
+                    <div class="bg-white/80 backdrop-blur-sm px-5 py-2.5 rounded-full border border-sky-200 shadow-sm text-sm font-medium text-sky-900 flex items-center transition-all duration-300 hover:shadow-md hover:-translate-y-1"><i class="fa-solid fa-train-subway mr-2 text-sky-600"></i> 特急 Sonic 攻略</div>
+                    <div class="bg-sky-800 text-white px-5 py-2.5 rounded-full border border-sky-700 shadow-lg text-sm font-bold flex items-center transition-all duration-300 hover:bg-sky-900 hover:-translate-y-1 shadow-sky-300/50"><i class="fa-solid fa-snowflake mr-2 text-white"></i> 家族滑雪銜接</div>
                 </div>
             </div>
         </header>
@@ -344,6 +344,7 @@
             
             const hashedPwd = await hashPassword(pwd);
             if(hashedPwd === '5768c50f891d9eb2a286ce4e1c954fb7a6b3919762037dd8ee841647d23fd220') {
+                sessionStorage.setItem('kyushu_auth', 'unlocked');
                 const loginScreen = document.getElementById('login-screen');
                 loginScreen.style.opacity = '0';
                 setTimeout(() => {
@@ -361,6 +362,14 @@
         }
         document.getElementById('password-input').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') { checkPassword(); }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (sessionStorage.getItem('kyushu_auth') === 'unlocked') {
+                document.getElementById('login-screen').style.display = 'none';
+                const mainContent = document.getElementById('main-content');
+                mainContent.classList.remove('hidden');
+            }
         });
     </script>
 </body>
