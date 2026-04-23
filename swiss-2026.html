@@ -9,16 +9,18 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         html { font-size: 112.5%; } /* 16px -> 18px */
-        body { font-family: 'Noto Sans TC', sans-serif; background-color: #FAFAF9; color: #292524; overflow: hidden; }
+        body { font-family: 'Inter', 'Noto Sans TC', sans-serif; background-color: #FAFAF9; color: #292524; overflow: hidden; }
         .chart-container { position: relative; width: 100%; max-width: 900px; margin: 0 auto; height: 45vh; min-height: 350px; max-height: 500px; }
         .map-wrapper { position: relative; width: 100%; height: 55vh; min-height: 450px; border-radius: 1rem; overflow: hidden; z-index: 10; background-color: #F5F5F4; }
         ::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: #f1f1f1; } ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; } ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
         .fade-in { animation: fadeIn 0.4s ease-out; } @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .station-header { position: sticky; top: 64px; z-index: 40; background-color: rgba(250, 250, 249, 0.95); backdrop-filter: blur(8px); }
-        .schedule-box { background-color: #F8FAFC; border-left: 4px solid #0284C7; padding: 10px 14px; border-radius: 0 0.5rem 0.5rem 0; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 0.85rem; color: #334155; margin-top: 12px; margin-bottom: 12px; }
+        .station-header { position: sticky; top: 64px; z-index: 40; background-color: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(229, 231, 235, 0.8); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03); }
+        .schedule-box { background-color: #F8FAFC; border-left: 4px solid #0284C7; padding: 10px 14px; border-radius: 0 0.5rem 0.5rem 0; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 0.85rem; color: #334155; margin-top: 12px; margin-bottom: 12px; transition: all 0.3s ease; }
+        .schedule-box:hover { transform: translateY(-2px); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); }
         .schedule-row { display: flex; justify-content: space-between; margin-bottom: 4px; align-items: center; } .schedule-row:last-child { margin-bottom: 0; }
         .schedule-time { font-weight: 700; color: #0F172A; width: 45px; } .schedule-station { flex-grow: 1; margin-left: 12px; font-weight: 500; }
         .schedule-train { color: #0284C7; font-size: 0.75rem; background: #E0F2FE; padding: 2px 6px; border-radius: 4px; font-weight: bold; }
@@ -63,12 +65,19 @@
 
     <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
         <!-- Hero Section -->
-        <header class="text-center space-y-4 py-8">
-            <h1 class="text-4xl md:text-5xl font-bold text-stone-800 tracking-tight">2026 義瑞盛夏自然之旅</h1>
-            <p class="text-lg md:text-xl text-stone-500 max-w-2xl mx-auto italic">「高容錯、低疲勞。結合精準 SBB 交通銜接的完美親子計畫。」</p>
-            <div class="flex flex-wrap justify-center gap-4 mt-8">
-                <div class="bg-white px-4 py-2 rounded-full border border-stone-200 shadow-sm text-sm font-medium text-stone-600"><i class="fa-solid fa-people-group mr-1"></i> 兩大一小 (10歲)</div>
-                <div class="bg-emerald-50 text-emerald-700 px-4 py-2 rounded-full border border-emerald-200 shadow-sm text-sm font-bold"><i class="fa-solid fa-check-double mr-1"></i> 機票與兩大基地已鎖定</div>
+        <header class="relative rounded-3xl overflow-hidden shadow-2xl mb-12">
+            <div class="absolute inset-0 bg-gradient-to-br from-stone-900 via-stone-800 to-sky-900 opacity-95"></div>
+            <!-- Subtly textured background pattern -->
+            <div class="absolute inset-0 opacity-[0.03] mix-blend-overlay" style="background-image: url('data:image/svg+xml,%3Csvg width=%2220%22 height=%2220%22 viewBox=%220 0 20 20%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cg fill=%22%23ffffff%22 fill-opacity=%221%22 fill-rule=%22evenodd%22%3E%3Ccircle cx=%223%22 cy=%223%22 r=%223%22/%3E%3Ccircle cx=%2213%22 cy=%2213%22 r=%223%22/%3E%3C/g%3E%3C/svg%3E');"></div>
+            
+            <div class="relative z-10 text-center py-16 px-6">
+                <div class="inline-block mb-4 px-4 py-1.5 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-sky-200 text-xs font-bold tracking-[0.2em] uppercase shadow-inner">2026 Family Trip Plan</div>
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-tight drop-shadow-md mb-4">義瑞盛夏自然之旅</h1>
+                <p class="text-lg md:text-xl text-stone-300 max-w-2xl mx-auto font-light tracking-wide drop-shadow mb-8">「高容錯、低疲勞。結合精準 SBB 交通銜接的完美親子計畫。」</p>
+                <div class="flex flex-wrap justify-center gap-4 pt-2">
+                    <div class="bg-white/10 backdrop-blur-md px-5 py-2.5 rounded-full border border-white/20 shadow-xl text-sm font-medium text-white flex items-center transition-all duration-300 hover:bg-white/20 hover:-translate-y-1"><i class="fa-solid fa-people-group mr-2 text-sky-300"></i> 兩大一小 (10歲)</div>
+                    <div class="bg-emerald-500/20 backdrop-blur-md text-emerald-100 px-5 py-2.5 rounded-full border border-emerald-400/30 shadow-xl text-sm font-bold flex items-center transition-all duration-300 hover:bg-emerald-500/30 hover:-translate-y-1"><i class="fa-solid fa-check-double mr-2 text-emerald-400"></i> 機票與基地已鎖定</div>
+                </div>
             </div>
         </header>
 
@@ -92,7 +101,7 @@
                         <i class="fa-solid fa-plane-departure text-sky-600 mr-2"></i>國泰航空 國際線機票 (3人)
                     </h3>
                     <div class="space-y-4">
-                        <div class="bg-stone-50 p-4 rounded-xl border border-stone-200 flex justify-between items-center">
+                        <div class="bg-stone-50 p-4 rounded-xl border border-stone-200 flex justify-between transition-all duration-300 hover:shadow-md hover:-translate-y-1 items-center">
                             <div>
                                 <p class="text-sm font-bold text-stone-800">去程 (TPE-HKG-MXP)</p>
                                 <p class="text-xs text-stone-500">8/7 21:05 出發</p>
@@ -101,7 +110,7 @@
                                 <p class="text-base font-bold text-stone-800">TWD 75,966</p>
                             </div>
                         </div>
-                        <div class="bg-stone-50 p-4 rounded-xl border border-stone-200 flex justify-between items-center">
+                        <div class="bg-stone-50 p-4 rounded-xl border border-stone-200 flex justify-between transition-all duration-300 hover:shadow-md hover:-translate-y-1 items-center">
                             <div>
                                 <p class="text-sm font-bold text-stone-800">回程 (ZRH-HKG-TPE)</p>
                                 <p class="text-xs text-stone-500">8/18 13:30 出發</p>
@@ -124,7 +133,7 @@
                         <i class="fa-solid fa-bed text-indigo-600 mr-2"></i>瑞士住宿費用
                     </h3>
                     <div class="space-y-4">
-                        <div class="bg-indigo-50/50 p-4 rounded-xl border border-indigo-100 flex justify-between items-center">
+                        <div class="bg-indigo-50/50 p-4 rounded-xl border border-indigo-100 flex justify-between transition-all duration-300 hover:shadow-md hover:-translate-y-1 hover:bg-indigo-50 items-center">
                             <div>
                                 <p class="text-sm font-bold text-stone-800">策馬特 (4晚)</p>
                                 <p class="text-xs text-stone-600">Haus Matten, Apt Gant</p>
@@ -135,7 +144,7 @@
                                 <p class="text-xs text-stone-500">(含 5% 刷卡手續費)</p>
                             </div>
                         </div>
-                        <div class="bg-indigo-50/50 p-4 rounded-xl border border-indigo-100 flex justify-between items-center">
+                        <div class="bg-indigo-50/50 p-4 rounded-xl border border-indigo-100 flex justify-between transition-all duration-300 hover:shadow-md hover:-translate-y-1 hover:bg-indigo-50 items-center">
                             <div>
                                 <p class="text-sm font-bold text-stone-800">格林德瓦 (4晚)</p>
                                 <p class="text-xs text-stone-600">Jungfrau Lodge, Swiss Mtn</p>
@@ -146,7 +155,7 @@
                                 <p class="text-xs text-emerald-600 font-medium">已折 CHF 79.55</p>
                             </div>
                         </div>
-                        <div class="bg-indigo-50/50 p-4 rounded-xl border border-indigo-100 flex justify-between items-center">
+                        <div class="bg-indigo-50/50 p-4 rounded-xl border border-indigo-100 flex justify-between transition-all duration-300 hover:shadow-md hover:-translate-y-1 hover:bg-indigo-50 items-center">
                             <div>
                                 <p class="text-sm font-bold text-stone-800">琉森 (2晚)</p>
                                 <p class="text-xs text-stone-600">Hotel Monopol Luzern ★★★★, Junior Suite</p>
@@ -177,23 +186,23 @@
                             <i class="fa-solid fa-id-card text-emerald-600 mr-2"></i>票卡與城際交通 (2大人，小孩 Family Card 免費)
                         </h3>
                         <div class="space-y-3">
-                            <div class="bg-emerald-50/50 p-4 rounded-xl border border-emerald-100 flex justify-between items-center">
+                            <div class="bg-emerald-50/50 p-4 rounded-xl border border-emerald-100 flex justify-between transition-all duration-300 hover:shadow-md hover:-translate-y-1 hover:bg-emerald-50 items-center">
                                 <div>
                                     <p class="text-sm font-bold text-stone-800">Swiss Half Fare Card (2大1小)</p>
                                     <p class="text-xs text-stone-500">KKday 購買 (已扣 $1,000 折扣)</p>
                                 </div>
                                 <p class="text-base font-bold text-emerald-800">TWD 10,914</p>
                             </div>
-                            <div class="bg-stone-50 p-3 rounded-xl border border-stone-200 flex justify-between items-center">
+                            <div class="bg-stone-50 p-3 rounded-xl border border-stone-200 flex justify-between items-center transition-all duration-300 hover:shadow-md hover:-translate-y-1">
                                 <div>
-                                    <p class="text-sm font-bold text-stone-800">城際火車半價票 (4段)</p>
+                                    <p class="text-sm font-bold text-stone-800">城際火車與遊船 (5段)</p>
                                     <p class="text-[12px] text-emerald-600"><i class="fa-solid fa-arrow-trend-down mr-1"></i>可再疊加 Supersaver 早鳥票省更多</p>
                                 </div>
-                                <p class="text-base font-bold text-stone-700">≈ CHF 220</p>
+                                <p class="text-base font-bold text-stone-700">≈ CHF 276</p>
                             </div>
                             <div class="flex justify-between items-center pt-1 px-2">
                                 <p class="text-sm font-bold text-stone-600">交通小計：</p>
-                                <p class="text-base font-black text-emerald-700">≈ TWD 19,780</p>
+                                <p class="text-base font-black text-emerald-700">≈ TWD 22,037</p>
                             </div>
                         </div>
                     </div>
@@ -204,13 +213,13 @@
                         </h3>
                         <div class="space-y-2">
                             <div class="flex justify-between items-center text-sm px-2 py-1.5"><span class="text-stone-600">D3 Gornergrat 來回</span><span class="font-bold">CHF 132</span></div>
-                            <div class="flex justify-between items-center text-sm px-2 py-1.5"><span class="text-stone-600">D4 冰川天堂 來回</span><span class="font-bold">~CHF 100</span></div>
+                            <div class="flex justify-between items-center text-sm px-2 py-1.5"><span class="text-stone-600">D4 冰川天堂 來回</span><span class="font-bold">~CHF 110</span></div>
                             <div class="flex justify-between items-center text-sm px-2 py-1.5"><span class="text-stone-600">D6 First 纜車+卡丁車</span><span class="font-bold">~CHF 140</span></div>
                             <div class="flex justify-between items-center text-sm px-2 py-1.5 bg-amber-50/50 rounded"><span class="text-stone-600">D7 少女峰 來回 <span class="text-[12px] bg-emerald-100 text-emerald-700 px-1 rounded">HFC 50%</span></span><span class="font-bold">~CHF 240</span></div>
-                            <div class="flex justify-between items-center text-sm px-2 py-1.5"><span class="text-stone-600">D10 皮拉圖斯 山段</span><span class="font-bold">~CHF 70</span></div>
+                            <div class="flex justify-between items-center text-sm px-2 py-1.5"><span class="text-stone-600">D10 皮拉圖斯 (含遊船)</span><span class="font-bold">~CHF 108</span></div>
                             <div class="flex justify-between items-center pt-2 px-2 border-t border-stone-200">
                                 <p class="text-sm font-bold text-stone-600">山岳小計：</p>
-                                <p class="text-base font-black text-sky-700">≈ CHF 682 (TWD 27,500)</p>
+                                <p class="text-base font-black text-sky-700">≈ CHF 730 (TWD 29,419)</p>
                             </div>
                         </div>
                     </div>
@@ -224,11 +233,11 @@
                     <span class="text-stone-400">+</span>
                     <span class="text-stone-600"><i class="fa-solid fa-bed text-indigo-500 mr-1"></i>住宿 <strong class="text-stone-800">128,962</strong></span>
                     <span class="text-stone-400">+</span>
-                    <span class="text-stone-600"><i class="fa-solid fa-train text-emerald-500 mr-1"></i>交通 <strong class="text-stone-800">≈19,780</strong></span>
+                    <span class="text-stone-600"><i class="fa-solid fa-train text-emerald-500 mr-1"></i>交通 <strong class="text-stone-800">≈22,037</strong></span>
                     <span class="text-stone-400">+</span>
-                    <span class="text-stone-600"><i class="fa-solid fa-mountain text-sky-500 mr-1"></i>山岳 <strong class="text-stone-800">≈27,500</strong></span>
+                    <span class="text-stone-600"><i class="fa-solid fa-mountain text-sky-500 mr-1"></i>山岳 <strong class="text-stone-800">≈29,419</strong></span>
                     <span class="text-stone-400">=</span>
-                    <span class="font-black text-emerald-700">≈ TWD 281,669</span>
+                    <span class="font-black text-emerald-700">≈ TWD 285,845</span>
                 </div>
             </div>
         </section>
@@ -244,7 +253,7 @@
                     <div class="bg-emerald-500/90 px-5 py-3 rounded-xl border border-emerald-400/50 text-center backdrop-blur-sm shadow-lg">
                         <p class="text-[12px] text-emerald-100 font-medium mb-0.5">✅ 推薦方案</p>
                         <p class="text-lg font-black">Half Fare Card</p>
-                        <p class="text-[12px] text-emerald-100">省 ≈ CHF 598 (TWD 24,100)</p>
+                        <p class="text-[12px] text-emerald-100">省 ≈ CHF 512 (TWD 20,600)</p>
                     </div>
                 </div>
             </button>
@@ -253,31 +262,31 @@
             <div class="p-6 md:p-8">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
                     <!-- HFC Card -->
-                    <div class="relative border-2 border-emerald-400 rounded-2xl p-6 bg-emerald-50/30 shadow-sm">
+                    <div class="relative border-2 border-emerald-400 rounded-2xl p-6 bg-emerald-50/30 shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:bg-emerald-50/80">
                         <div class="absolute -top-3 left-4 bg-emerald-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow"><i class="fa-solid fa-crown mr-1"></i>推薦</div>
                         <h3 class="text-lg font-bold text-stone-800 mb-1 mt-1"><i class="fa-solid fa-id-card text-emerald-600 mr-2"></i>Swiss Half Fare Card (HFC)</h3>
                         <p class="text-xs text-stone-500 mb-4">有效 1 個月 · 所有交通與山岳享 50% 折扣</p>
                         <div class="space-y-2">
                             <div class="flex justify-between text-sm"><span class="text-stone-600">卡片費用 (×2 大人)</span><span class="font-bold">CHF 300</span></div>
                             <div class="flex justify-between text-sm"><span class="text-stone-600">Swiss Family Card</span><span class="font-bold text-emerald-600">免費</span></div>
-                            <div class="flex justify-between text-sm"><span class="text-stone-600">火車半價票 (4 段)</span><span class="font-bold">≈ CHF 220</span></div>
+                            <div class="flex justify-between text-sm"><span class="text-stone-600">城際火車與遊船 (5 段)</span><span class="font-bold">≈ CHF 276</span></div>
                             <div class="text-[12px] text-emerald-600 ml-1 -mt-1 mb-1"><i class="fa-solid fa-arrow-trend-down mr-1"></i>可疊加 Supersaver 早鳥票再降 30~50%</div>
-                            <div class="flex justify-between text-sm"><span class="text-stone-600">山岳票券 (半價)</span><span class="font-bold">≈ CHF 637</span></div>
-                            <div class="border-t border-emerald-200 pt-2 mt-2 flex justify-between"><span class="font-bold text-stone-800">總計</span><span class="text-xl font-black text-emerald-700">≈ CHF 1,157</span></div>
-                            <p class="text-xs text-stone-500 text-right">≈ TWD 46,600</p>
+                            <div class="flex justify-between text-sm"><span class="text-stone-600">山岳票券 (半價)</span><span class="font-bold">≈ CHF 658</span></div>
+                            <div class="border-t border-emerald-200 pt-2 mt-2 flex justify-between"><span class="font-bold text-stone-800">總計</span><span class="text-xl font-black text-emerald-700">≈ CHF 1,234</span></div>
+                            <p class="text-xs text-stone-500 text-right">≈ TWD 49,700</p>
                         </div>
                     </div>
                     <!-- STP Card -->
-                    <div class="border border-stone-200 rounded-2xl p-6 bg-stone-50/30 shadow-sm opacity-80">
+                    <div class="border border-stone-200 rounded-2xl p-6 bg-stone-50/30 shadow-sm opacity-80 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:opacity-100">
                         <h3 class="text-lg font-bold text-stone-800 mb-1"><i class="fa-solid fa-passport text-stone-500 mr-2"></i>Swiss Travel Pass 15天</h3>
                         <p class="text-xs text-stone-500 mb-4">無限搭乘 · 但山岳折扣較低 · 無 10 天選項</p>
                         <div class="space-y-2">
                             <div class="flex justify-between text-sm"><span class="text-stone-600">Pass 費用 (×2 大人)</span><span class="font-bold">CHF 998</span></div>
                             <div class="flex justify-between text-sm"><span class="text-stone-600">Swiss Family Card</span><span class="font-bold text-emerald-600">免費</span></div>
-                            <div class="flex justify-between text-sm"><span class="text-stone-600">火車全免</span><span class="font-bold text-emerald-600">CHF 0</span></div>
-                            <div class="flex justify-between text-sm"><span class="text-stone-600">山岳票券 (折扣較低)</span><span class="font-bold">≈ CHF 757</span></div>
-                            <div class="border-t border-stone-200 pt-2 mt-2 flex justify-between"><span class="font-bold text-stone-800">總計</span><span class="text-xl font-black text-stone-500">≈ CHF 1,755</span></div>
-                            <p class="text-xs text-stone-500 text-right">≈ TWD 70,700</p>
+                            <div class="flex justify-between text-sm"><span class="text-stone-600">火車與遊船</span><span class="font-bold text-emerald-600">CHF 0</span></div>
+                            <div class="flex justify-between text-sm"><span class="text-stone-600">山岳票券 (折扣較低)</span><span class="font-bold">≈ CHF 748</span></div>
+                            <div class="border-t border-stone-200 pt-2 mt-2 flex justify-between"><span class="font-bold text-stone-800">總計</span><span class="text-xl font-black text-stone-500">≈ CHF 1,746</span></div>
+                            <p class="text-xs text-stone-500 text-right">≈ TWD 70,360</p>
                         </div>
                     </div>
                 </div>
@@ -355,18 +364,18 @@
                             </tr>
                             <tr>
                                 <td class="px-3 py-2.5 font-medium">D10</td>
-                                <td class="px-3 py-2.5">皮拉圖斯 山段</td>
-                                <td class="px-3 py-2.5 text-right text-stone-400">~CHF 140</td>
-                                <td class="px-3 py-2.5 text-right font-bold text-emerald-700">~CHF 70 <span class="text-[12px] bg-emerald-100 px-1 rounded">50%</span></td>
-                                <td class="px-3 py-2.5 text-right text-stone-500">~CHF 70 <span class="text-[12px] bg-stone-100 px-1 rounded">50%</span></td>
-                                <td class="px-3 py-2.5 text-center text-stone-400">—</td>
+                                <td class="px-3 py-2.5">皮拉圖斯 (含遊船)</td>
+                                <td class="px-3 py-2.5 text-right text-stone-400">~CHF 216</td>
+                                <td class="px-3 py-2.5 text-right font-bold text-emerald-700">~CHF 108 <span class="text-[12px] bg-emerald-100 px-1 rounded">50%</span></td>
+                                <td class="px-3 py-2.5 text-right text-stone-500">~CHF 78 <span class="text-[12px] bg-stone-100 px-1 rounded">部分免費</span></td>
+                                <td class="px-3 py-2.5 text-center"><span class="text-xs text-stone-500 font-bold">STP 省 30</span></td>
                             </tr>
                             <tr class="bg-stone-50 font-bold">
                                 <td class="px-3 py-2.5" colspan="2">山岳票券合計</td>
-                                <td class="px-3 py-2.5 text-right text-stone-400">~CHF 1,234</td>
-                                <td class="px-3 py-2.5 text-right text-emerald-700">≈ CHF 637</td>
-                                <td class="px-3 py-2.5 text-right text-stone-500">≈ CHF 757</td>
-                                <td class="px-3 py-2.5 text-center"><span class="text-xs text-emerald-700 font-bold">HFC 省 120</span></td>
+                                <td class="px-3 py-2.5 text-right text-stone-400">~CHF 1,316</td>
+                                <td class="px-3 py-2.5 text-right text-emerald-700">≈ CHF 658</td>
+                                <td class="px-3 py-2.5 text-right text-stone-500">≈ CHF 748</td>
+                                <td class="px-3 py-2.5 text-center"><span class="text-xs text-emerald-700 font-bold">HFC 淨省 90</span></td>
                             </tr>
                         </tbody>
                     </table>
@@ -402,15 +411,22 @@
                             <tr>
                                 <td class="px-3 py-2.5 font-medium">D5</td>
                                 <td class="px-3 py-2.5">Zermatt → Grindelwald</td>
-                                <td class="px-3 py-2.5 text-right text-stone-400">~CHF 150</td>
-                                <td class="px-3 py-2.5 text-right font-bold">~CHF 75</td>
+                                <td class="px-3 py-2.5 text-right text-stone-400">~CHF 154</td>
+                                <td class="px-3 py-2.5 text-right font-bold">~CHF 77</td>
+                                <td class="px-3 py-2.5 text-right text-emerald-600 font-bold">免費</td>
+                            </tr>
+                            <tr class="bg-sky-50/30">
+                                <td class="px-3 py-2.5 font-medium">D8</td>
+                                <td class="px-3 py-2.5 text-stone-600">彈性備案 (穆倫 / 湖區遊船)</td>
+                                <td class="px-3 py-2.5 text-right text-stone-400">~CHF 100</td>
+                                <td class="px-3 py-2.5 text-right font-bold">~CHF 50</td>
                                 <td class="px-3 py-2.5 text-right text-emerald-600 font-bold">免費</td>
                             </tr>
                             <tr>
                                 <td class="px-3 py-2.5 font-medium">D9</td>
                                 <td class="px-3 py-2.5">Grindelwald → Luzern</td>
-                                <td class="px-3 py-2.5 text-right text-stone-400">~CHF 120</td>
-                                <td class="px-3 py-2.5 text-right font-bold">~CHF 60</td>
+                                <td class="px-3 py-2.5 text-right text-stone-400">~CHF 110</td>
+                                <td class="px-3 py-2.5 text-right font-bold">~CHF 55</td>
                                 <td class="px-3 py-2.5 text-right text-emerald-600 font-bold">免費</td>
                             </tr>
                             <tr>
@@ -421,9 +437,9 @@
                                 <td class="px-3 py-2.5 text-right text-emerald-600 font-bold">免費</td>
                             </tr>
                             <tr class="bg-stone-50 font-bold">
-                                <td class="px-3 py-2.5" colspan="2">火車合計</td>
-                                <td class="px-3 py-2.5 text-right text-stone-400">~CHF 440</td>
-                                <td class="px-3 py-2.5 text-right">≈ CHF 220</td>
+                                <td class="px-3 py-2.5" colspan="2">火車/遊船合計</td>
+                                <td class="px-3 py-2.5 text-right text-stone-400">~CHF 552</td>
+                                <td class="px-3 py-2.5 text-right">≈ CHF 276</td>
                                 <td class="px-3 py-2.5 text-right text-emerald-600">CHF 0</td>
                             </tr>
                         </tbody>
